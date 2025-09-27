@@ -1,0 +1,19 @@
+repos:
+  - repo: https://github.com/psf/black
+    rev: 24.8.0
+    hooks: [{id: black, args: ["-l","100"], language_version: python3}]
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.6.8
+    hooks: [{id: ruff, args: ["--fix"]}]
+  - repo: local
+    hooks:
+      - id: validate-cards
+        name: validate-cards
+        entry: python tools/validate_cards.py assets/meta/cards.json tools/card_schema.json
+        language: system
+        pass_filenames: false
+      - id: sim-dryrun
+        name: sim-dryrun
+        entry: python tools/sim.py --ticks 10
+        language: system
+        pass_filenames: false

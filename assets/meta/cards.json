@@ -1,0 +1,74 @@
+[
+  {
+    "id": "wheat_field_001",
+    "name": "Wheat Field",
+    "rarity": "common",
+    "tags": ["farm", "resource"],
+    "art_id": "wheat_field_001",
+    "art_prompt": "cartoon sticker, cel-shaded, flat colors, bold clean outline, minimal texture, vector aesthetic, isometric town-building asset, golden wheat field with neat rows, small stones and tufts, cozy village vibe",
+    "negative": "photorealistic, painterly, heavy texture, grain, noise, blurry, realistic lighting, text, watermark, logo",
+    "produces": [{"resource": "wheat", "rate": 2}],
+    "consumes": [],
+    "cost": {"wood": 5}
+  },
+  {
+    "id": "mill_001",
+    "name": "Mill",
+    "rarity": "common",
+    "tags": ["processing", "building"],
+    "art_id": "mill_001",
+    "art_prompt": "cartoon sticker, cel-shaded, flat colors, bold clean outline, minimal texture, vector aesthetic, isometric town-building asset, wooden grain mill with water wheel, stone base, small warm windows, cozy village",
+    "negative": "photorealistic, painterly, heavy texture, grain, noise, blurry, realistic lighting, text, watermark, logo",
+    "produces": [{"resource": "flour", "rate": 1}],
+    "consumes": [{"resource": "wheat", "rate": 2}],
+    "cost": {"wood": 8, "stone": 4}
+  },
+  {
+    "id": "bakery_001",
+    "name": "Bakery",
+    "rarity": "uncommon",
+    "tags": ["processing", "building"],
+    "art_id": "bakery_001",
+    "art_prompt": "cartoon sticker, cel-shaded, flat colors, bold clean outline, minimal texture, vector aesthetic, isometric town-building asset, bakery oven with loaves on tray, tiny chimney puff, cozy storefront feel",
+    "negative": "photorealistic, painterly, heavy texture, grain, noise, blurry, realistic lighting, text, watermark, logo",
+    "produces": [{"resource": "bread", "rate": 1}],
+    "consumes": [{"resource": "flour", "rate": 1}],
+    "cost": {"wood": 10, "stone": 6}
+  },
+  {
+    "id": "market_001",
+    "name": "Market Stall",
+    "rarity": "common",
+    "tags": ["trade", "building"],
+    "art_id": "market_001",
+    "art_prompt": "cartoon sticker, cel-shaded, flat colors, bold clean outline, minimal texture, vector aesthetic, isometric town-building asset, market stall with striped awning and crates of goods, cozy village square",
+    "negative": "photorealistic, painterly, heavy texture, grain, noise, blurry, realistic lighting, text, watermark, logo",
+    "produces": [{"resource": "gold", "rate": 1}],
+    "consumes": [{"resource": "bread", "rate": 1}],
+    "cost": {"wood": 6}
+  },
+  {
+    "id": "lamp_post_001",
+    "name": "Lamp Post",
+    "rarity": "common",
+    "tags": ["decor"],
+    "art_id": "lamp_post_001",
+    "art_prompt": "cartoon sticker, cel-shaded, flat colors, bold clean outline, minimal texture, vector aesthetic, isometric town-building asset, iron lamp post on small cobblestone base with warm glow",
+    "negative": "photorealistic, painterly, heavy texture, grain, noise, blurry, realistic lighting, text, watermark, logo",
+    "produces": [],
+    "consumes": [],
+    "cost": {"wood": 1, "iron": 1}
+  },
+  {
+    "id": "signboard_001",
+    "name": "Signboard",
+    "rarity": "common",
+    "tags": ["decor"],
+    "art_id": "signboard_001",
+    "art_prompt": "cartoon sticker, cel-shaded, flat colors, bold clean outline, minimal texture, vector aesthetic, isometric town-building asset, wooden hanging signboard with carved trim and metal bracket",
+    "negative": "photorealistic, painterly, heavy texture, grain, noise, blurry, realistic lighting, text, watermark, logo",
+    "produces": [],
+    "consumes": [],
+    "cost": {"wood": 2}
+  }
+]

@@ -1,0 +1,47 @@
+<!doctype html><html><head>
+<link rel="icon" type="image/svg+xml" href="../assets/meta/bread.svg">
+<meta charset="utf-8"/>
+<title>Cozy Cards Gallery</title>
+<style>
+  body{font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif;margin:24px;background:#0b0c10;color:#e6e6e6}
+  header{display:flex;gap:12px;align-items:center;margin-bottom:16px}
+  input,select{padding:8px;border-radius:8px;border:1px solid #333;background:#121317;color:#e6e6e6}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
+  .card{background:#121317;border:1px solid #2a2d35;border-radius:16px;padding:12px}
+  .card img{width:100%;border-radius:12px;background:#0b0c10}
+  .meta{display:flex;justify-content:space-between;margin-top:8px;font-size:12px;opacity:.85}
+  .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+  .tag{font-size:11px;background:#1b1e27;border:1px solid #2a2d35;padding:2px 8px;border-radius:999px}
+</style>
+</head><body>
+<header>
+  <input id="q" placeholder="search name/tag..." />
+  <select id="rarity">
+    <option value="">all rarities</option>
+    <option>common</option><option>uncommon</option>
+    <option>rare</option><option>epic</option><option>legendary</option>
+  </select>
+</header>
+<div class="grid" id="grid"></div>
+<script>
+async function load(){const cards=await (await fetch("../assets/meta/cards.json",{cache:"no-store"})).json();
+const q=document.getElementById("q"), r=document.getElementById("rarity"), grid=document.getElementById("grid");
+function render(){
+  const S=(q.value||"").toLowerCase(), R=r.value;
+  grid.innerHTML="";
+  cards.filter(c=>{
+    const hit=!S||c.name.toLowerCase().includes(S)||c.tags.some(t=>t.toLowerCase().includes(S));
+    const rOk=!R||c.rarity===R; return hit&&rOk;
+  }).forEach(c=>{
+    const div=document.createElement("div"); div.className="card";
+    div.innerHTML=`
+      <img loading="lazy" src="../assets/art/cards/${c.art_id}.png" alt="${c.name}">
+      <div class="meta"><strong>${c.name}</strong><span>${c.rarity}</span></div>
+      <div class="tags">${c.tags.map(t=>`<span class="tag">${t}</span>`).join("")}</div>`;
+    grid.appendChild(div);
+  });
+}
+q.oninput=r.onchange=render; render();}
+load();
+</script>
+</body></html>
