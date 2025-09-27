@@ -1,9 +1,9 @@
 {
   "id": "mill_001",
   "style": "cartoon_sticker",
-  "subject": "cartoon sticker, cel-shaded, flat colors, bold clean outline, minimal texture, vector aesthetic, isometric town-building asset, wooden grain mill with water wheel, stone base, small warm windows, cozy village",
-  "prompt_final": "cartoon, cel-shaded, flat colors, bold outline, sticker, isometric, single object, isolated, centered, plain white background, no scene, icon-like, large scale, cartoon sticker, cel-shaded, flat colors, bold clean outline, minimal texture, vector aesthetic, isometric town-building asset, wooden grain mill with water wheel",
-  "negative_final": "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, photorealistic, painterly, heavy texture, grain, noise, blurry, realistic lighting, text, watermark, logo",
+  "subject": "cozy kawaii sticker of a small wooden grain mill with a water wheel on a stone base, small warm windows and planks detail, isometric mini diorama, flat pastel colors, thick outline, soft ambient occlusion, simple shapes, no text, clean icon, centered, transparent background look, vector feel",
+  "prompt_final": "cartoon, cel-shaded, flat colors, bold outline, sticker, isometric, single object, isolated, centered, plain white background, no scene, icon-like, large scale, cozy kawaii sticker of a small wooden grain mill with a water wheel on a stone base, small warm windows and planks detail, isometric mini diorama, flat pastel colors",
+  "negative_final": "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, low quality, deformed, extra fingers, blurry, text, watermark, logo",
   "seed": 2218957695,
   "model_id": "stabilityai/stable-diffusion-xl-base-1.0",
   "scheduler": "DPMSolverMultistepScheduler",
@@ -15,11 +15,11 @@
   "torch": "2.6.0+cu124",
   "diffusers": "0.35.1",
   "platform": "Windows-11-10.0.26100-SP0",
-  "time_unix": 1758933372,
+  "time_unix": 1759002466,
   "cutout_mode": "auto",
   "bg_color_detected": [
-    244,
-    243,
-    238
+    240,
+    239,
+    237
   ]
 }

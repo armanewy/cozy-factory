@@ -1,6 +1,5 @@
-import argparse, json, os, platform, sys, time
+import argparse, json, os, platform, time
 from io import BytesIO
-from pathlib import Path
 from statistics import median
 
 from PIL import Image, ImageFilter, ImageChops
@@ -10,12 +9,6 @@ from diffusers import StableDiffusionXLPipeline, DPMSolverMultistepScheduler
 from seed_from_id import seed_from_id
 from pad_square import pad_square
 from rembg import remove as rembg_remove
-
-ROOT = Path(__file__).resolve().parents[1]
-if str(ROOT) not in sys.path:
-    sys.path.insert(0, str(ROOT))
-
-from tools.art_post.stroke_and_bleed import apply_stroke_and_bleed
 
 # Unified cartoon style; enforce isolated, centered subject on plain background
 STYLES = {
@@ -221,7 +214,6 @@ def run_generation(
 
     # Outline for consistent sticker look
     cutout = add_outline_rgba(cutout, outline_px=12, color=(255, 255, 255, 255))
-    cutout = apply_stroke_and_bleed(cutout)  # Matte bleed + cozy stroke to avoid dark seams
 
     # Pad to square (transparent) and optionally frame
     tmp_cut = os.path.join("temp", f"{cid}_no_bg.png")
@@ -265,7 +257,7 @@ def run_generation(
     manifest["cards"][cid] = card_meta
     _write_json(BUILD_MANIFEST, manifest)
 
-    print(f"[ok] {final_path}")
+    print(f"✅ {final_path}")
     return final_path
 
 
