@@ -1,25 +1,21 @@
 {
   "id": "bakery_001",
   "style": "cartoon_sticker",
-  "subject": "cartoon sticker, cel-shaded, flat colors, bold clean outline, minimal texture, vector aesthetic, isometric town-building asset, bakery oven with loaves on tray, tiny chimney puff, cozy storefront feel",
-  "prompt_final": "cartoon, cel-shaded, flat colors, bold outline, sticker, isometric, single object, isolated, centered, plain white background, no scene, icon-like, large scale, cartoon sticker, cel-shaded, flat colors, bold clean outline, minimal texture, vector aesthetic, isometric town-building asset, bakery oven with loaves on tray",
-  "negative_final": "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, photorealistic, painterly, heavy texture, grain, noise, blurry, realistic lighting, text, watermark, logo",
+  "subject": "cartoon, cel-shaded, flat colors, bold outline, sticker, isometric, single object, centered, large scale, plain white background, clean silhouette, no scene, one bakery oven with loaves on a tray, tiny chimney puff",
+  "prompt_final": "cartoon, cel-shaded, flat colors, bold outline, sticker, isometric, single object, centered, large scale, plain white background, clean silhouette, no scene, cartoon, cel-shaded, flat colors, bold outline, sticker, isometric, single object, centered, large scale, plain white background, clean silhouette, no scene",
+  "negative_final": "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, multiple, pair, duplicate, extra object, photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background",
   "seed": 4096709502,
   "model_id": "stabilityai/stable-diffusion-xl-base-1.0",
   "scheduler": "DPMSolverMultistepScheduler",
   "steps": 28,
   "guidance": 6.5,
-  "width": 1024,
-  "height": 1024,
+  "width": null,
+  "height": null,
   "device": "cuda",
   "torch": "2.6.0+cu124",
   "diffusers": "0.35.1",
   "platform": "Windows-11-10.0.26100-SP0",
-  "time_unix": 1759001524,
-  "cutout_mode": "auto",
-  "bg_color_detected": [
-    200,
-    183,
-    178
-  ]
+  "time_unix": 1759079996,
+  "cutout_mode": "rembg",
+  "bg_color_detected": null
 }

@@ -17,27 +17,22 @@ if str(ROOT) not in sys.path:
 
 from tools.art_post.stroke_and_bleed import apply_stroke_and_bleed
 
-# Cozy diorama style for sticker-like props with consistent prompts
 STYLES = {
-    "cozy_diorama": {
-        "prelude": (
-            "cozy isometric diorama, cel-shaded, flat pastel colors, soft ambient occlusion, "
-            "inked outlines, 3/4 view, centered product shot, minimal plain light pastel background (#f7f3ef), "
-            "bright daylight, gentle bounce light"
-        ),
-        "negative": (
-            "photo, photorealistic, painterly texture, people, animals, busy scene, background scenery, sky, clouds, "
-            "text, watermark, logo, noisy, grainy, vignette, messy edges, cut off, crop, heavy shadow"
-        ),
+    "cartoon_sticker": {
+        "prelude": "cartoon, cel-shaded, flat colors, bold outline, sticker, isometric, single object, centered, large scale, plain white background, clean silhouette, no scene",
+        "negative": "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, multiple, pair, duplicate, extra object",
         "steps": 28,
         "guidance": 6.5,
-        "width": 768,
-        "height": 768,
-        "refiner_strength": 0.2,
-    }
+    },
+    # keep your old look available if you want to compare side-by-side
+    "cozy_diorama": {
+        "prelude": "stylized diorama, hand-painted miniature, soft edges, pastel palette",
+        "negative": "photo, realistic, harsh texture, heavy noise, text, watermark, logo",
+        "steps": 30,
+        "guidance": 7.0,
+    },
 }
-
-DEFAULT_STYLE = "cozy_diorama"
+DEFAULT_STYLE = "cartoon_sticker"
 BUILD_MANIFEST = "assets/meta/build_manifest.json"
 
 
