@@ -1,0 +1,172 @@
+{
+    "1":  {
+              "inputs":  {
+                             "seed":  0,
+                             "steps":  28,
+                             "cfg":  6.5,
+                             "sampler_name":  "dpmpp_2m",
+                             "scheduler":  "karras",
+                             "denoise":  1.0,
+                             "model":  [
+                                           "2",
+                                           0
+                                       ],
+                             "positive":  [
+                                              "4",
+                                              0
+                                          ],
+                             "negative":  [
+                                              "5",
+                                              0
+                                          ],
+                             "latent_image":  [
+                                                  "3",
+                                                  0
+                                              ]
+                         },
+              "class_type":  "KSampler",
+              "_meta":  {
+                            "title":  "Base KSampler"
+                        }
+          },
+    "2":  {
+              "inputs":  {
+                             "ckpt_name":  "sd_xl_base_1.0.safetensors"
+                         },
+              "class_type":  "CheckpointLoaderSimple",
+              "_meta":  {
+                            "title":  "Load SDXL Base"
+                        }
+          },
+    "3":  {
+              "inputs":  {
+                             "width":  768,
+                             "height":  768,
+                             "batch_size":  1
+                         },
+              "class_type":  "EmptyLatentImage",
+              "_meta":  {
+                            "title":  "Empty Latent 768"
+                        }
+          },
+    "4":  {
+              "inputs":  {
+                             "text":  "single cozy isometric street lamp prop, stylised clay miniature, cel-shaded, flat pastel colors, soft ambient occlusion, crisp hand-inked outlines, 3/4 view, one vintage lamp with glowing glass lantern, full slender pole anchored to a tiny round cobblestone base, centered composition, isolated product shot, clean silhouette, plain light pastel backdrop (#f7f3ef), gentle daylight bounce light, SUBJECT HERE",
+                             "clip":  [
+                                          "2",
+                                          1
+                                      ]
+                         },
+              "class_type":  "CLIPTextEncode",
+              "_meta":  {
+                            "title":  "Base Positive"
+                        }
+          },
+    "5":  {
+              "inputs":  {
+                             "text":  "photo, photorealistic, painterly texture, realistic lighting, busy scene, background scenery, plaza tiles, terrain, multiple props, duplicates, mirrored pairs, spotlight heads, floodlights, clocks, cut-off poles, hanging cables, trees, bushes, people, animals, vehicles, signage, text, watermark, logo, harsh shadows, chromatic aberration, noisy, grainy, messy edges",
+                             "clip":  [
+                                          "2",
+                                          1
+                                      ]
+                         },
+              "class_type":  "CLIPTextEncode",
+              "_meta":  {
+                            "title":  "Base Negative"
+                        }
+          },
+    "6":  {
+              "inputs":  {
+                             "ckpt_name":  "sd_xl_refiner_1.0.safetensors"
+                         },
+              "class_type":  "CheckpointLoaderSimple",
+              "_meta":  {
+                            "title":  "Load SDXL Refiner"
+                        }
+          },
+    "7":  {
+              "inputs":  {
+                             "text":  "single cozy isometric street lamp prop, stylised clay miniature, cel-shaded, flat pastel colors, soft ambient occlusion, crisp hand-inked outlines, 3/4 view, one vintage lamp with glowing glass lantern, full slender pole anchored to a tiny round cobblestone base, centered composition, isolated product shot, clean silhouette, plain light pastel backdrop (#f7f3ef), gentle daylight bounce light, SUBJECT HERE",
+                             "clip":  [
+                                          "6",
+                                          1
+                                      ]
+                         },
+              "class_type":  "CLIPTextEncode",
+              "_meta":  {
+                            "title":  "Refiner Positive"
+                        }
+          },
+    "8":  {
+              "inputs":  {
+                             "text":  "photo, photorealistic, painterly texture, realistic lighting, busy scene, background scenery, plaza tiles, terrain, multiple props, duplicates, mirrored pairs, spotlight heads, floodlights, clocks, cut-off poles, hanging cables, trees, bushes, people, animals, vehicles, signage, text, watermark, logo, harsh shadows, chromatic aberration, noisy, grainy, messy edges",
+                             "clip":  [
+                                          "6",
+                                          1
+                                      ]
+                         },
+              "class_type":  "CLIPTextEncode",
+              "_meta":  {
+                            "title":  "Refiner Negative"
+                        }
+          },
+    "9":  {
+              "inputs":  {
+                             "seed":  0,
+                             "steps":  10,
+                             "cfg":  6.5,
+                             "sampler_name":  "dpmpp_2m",
+                             "scheduler":  "karras",
+                             "denoise":  0.2,
+                             "model":  [
+                                           "6",
+                                           0
+                                       ],
+                             "positive":  [
+                                              "7",
+                                              0
+                                          ],
+                             "negative":  [
+                                              "8",
+                                              0
+                                          ],
+                             "latent_image":  [
+                                                  "1",
+                                                  0
+                                              ]
+                         },
+              "class_type":  "KSampler",
+              "_meta":  {
+                            "title":  "Refiner KSampler"
+                        }
+          },
+    "10":  {
+               "inputs":  {
+                              "samples":  [
+                                              "9",
+                                              0
+                                          ],
+                              "vae":  [
+                                          "2",
+                                          2
+                                      ]
+                          },
+               "class_type":  "VAEDecode",
+               "_meta":  {
+                             "title":  "Decode"
+                         }
+           },
+    "11":  {
+               "inputs":  {
+                              "filename_prefix":  "cards/cozy_diorama",
+                              "images":  [
+                                             "10",
+                                             0
+                                         ]
+                          },
+               "class_type":  "SaveImage",
+               "_meta":  {
+                             "title":  "Save Image"
+                         }
+           }
+}

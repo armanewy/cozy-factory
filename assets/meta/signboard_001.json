@@ -1,25 +1,22 @@
 {
   "id": "signboard_001",
-  "style": "cartoon_sticker",
-  "subject": "cozy kawaii sticker of a wooden hanging signboard with carved trim and a metal bracket, decorative emblem only (no words), isometric mini diorama, flat pastel colors, thick outline, soft ambient occlusion, simple shapes, no text, clean icon, centered, transparent background look, vector feel",
-  "prompt_final": "cartoon, cel-shaded, flat colors, bold outline, sticker, isometric, single object, isolated, centered, plain white background, no scene, icon-like, large scale, cozy kawaii sticker of a wooden hanging signboard with carved trim and a metal bracket, decorative emblem only (no words), isometric mini diorama, flat pastel colors",
-  "negative_final": "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, low quality, deformed, extra fingers, blurry, text, watermark, logo",
+  "style": "cozy_diorama",
+  "subject": "wooden hanging signboard on a metal bracket with a small planter",
+  "prompt_final": "cozy isometric diorama, cel-shaded, flat pastel colors, soft ambient occlusion, inked outlines, 3/4 view, centered product shot, minimal plain light pastel background (#f7f3ef), bright daylight, gentle bounce light, wooden hanging signboard on a metal bracket with a small planter",
+  "negative_final": "photo, photorealistic, painterly texture, people, animals, busy scene, background scenery, sky, clouds, text, watermark, logo, noisy, grainy, vignette, messy edges, cut off, crop, heavy shadow, low quality, deformed, extra fingers, blurry, text, watermark, logo",
   "seed": 940643818,
   "model_id": "stabilityai/stable-diffusion-xl-base-1.0",
   "scheduler": "DPMSolverMultistepScheduler",
   "steps": 28,
   "guidance": 6.5,
-  "width": 1024,
-  "height": 1024,
-  "device": "cuda",
-  "torch": "2.6.0+cu124",
+  "width": 768,
+  "height": 768,
+  "device": "cpu",
+  "torch": "2.6.0+cpu",
   "diffusers": "0.35.1",
   "platform": "Windows-11-10.0.26100-SP0",
-  "time_unix": 1759002435,
-  "cutout_mode": "auto",
-  "bg_color_detected": [
-    156,
-    154,
-    164
-  ]
+  "time_unix": 1759007348,
+  "cutout_mode": "rembg",
+  "bg_color_detected": null,
+  "refiner_strength": 0.2
 }

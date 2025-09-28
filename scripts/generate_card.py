@@ -1,32 +1,43 @@
 import argparse, json, os, platform, time
 from io import BytesIO
 from statistics import median
+import sys
+from pathlib import Path
 
-from PIL import Image, ImageFilter, ImageChops
+from PIL import Image, ImageChops
 import torch
 from diffusers import StableDiffusionXLPipeline, DPMSolverMultistepScheduler
 
 from seed_from_id import seed_from_id
 from pad_square import pad_square
 from rembg import remove as rembg_remove
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.append(str(ROOT))
 
-# Unified cartoon style; enforce isolated, centered subject on plain background
+from tools.art_post.stroke_and_bleed import apply_stroke_and_bleed
+
+# Cozy diorama style for sticker-like props with consistent prompts
 STYLES = {
-    "cartoon_sticker": {
+    "cozy_diorama": {
         "prelude": (
-            "cartoon, cel-shaded, flat colors, bold outline, sticker, isometric, "
-            "single object, isolated, centered, plain white background, no scene, icon-like, large scale"
+            "cozy isometric diorama, cel-shaded, flat pastel colors, soft ambient occlusion, "
+            "inked outlines, 3/4 view, centered product shot, minimal plain light pastel background (#f7f3ef), "
+            "bright daylight, gentle bounce light"
         ),
         "negative": (
-            "photo, realistic, painterly, textured, grainy, noisy, blurry, "
-            "text, watermark, logo, dark background, black background, busy scene"
+            "photo, photorealistic, painterly texture, people, animals, busy scene, background scenery, sky, clouds, "
+            "text, watermark, logo, noisy, grainy, vignette, messy edges, cut off, crop, heavy shadow"
         ),
         "steps": 28,
         "guidance": 6.5,
+        "width": 768,
+        "height": 768,
+        "refiner_strength": 0.2,
     }
 }
 
-DEFAULT_STYLE = "cartoon_sticker"
+DEFAULT_STYLE = "cozy_diorama"
 BUILD_MANIFEST = "assets/meta/build_manifest.json"
 
 
@@ -149,28 +160,15 @@ def cutout_by_bgcolor(img: Image.Image, tol: int = 10):
 
 
 def remove_bg_rgba(img: Image.Image) -> Image.Image:
-    """Fallback to rembg segmentation (can over-remove for stylized art)."""
+    """Alpha-matte segmentation tuned for the cozy sticker pipeline."""
     buf = BytesIO()
     img.save(buf, format="PNG")
-    out = rembg_remove(buf.getvalue())
+    out = rembg_remove(
+        buf.getvalue(),
+        alpha_matting=True,
+        alpha_matting_foreground_threshold=240,
+    )
     return Image.open(BytesIO(out)).convert("RGBA")
-
-
-def add_outline_rgba(img: Image.Image, outline_px: int = 12, color=(255, 255, 255, 255)) -> Image.Image:
-    """Add a smooth, consistent white outline using the alpha as silhouette."""
-    if img.mode != "RGBA":
-        img = img.convert("RGBA")
-    *_, a = img.split()
-    # Dilate then blur alpha to get a softer, non-blocky edge
-    radius = max(2, outline_px // 2)
-    dilated = a.filter(ImageFilter.MaxFilter(size=outline_px * 2 + 1))
-    blurred = dilated.filter(ImageFilter.GaussianBlur(radius=radius))
-    outline = Image.new("RGBA", img.size, color)
-    outline.putalpha(blurred)
-    base = Image.new("RGBA", img.size, (0, 0, 0, 0))
-    base.alpha_composite(outline)
-    base.alpha_composite(img)
-    return base
 
 
 def run_generation(
@@ -196,24 +194,29 @@ def run_generation(
         steps = style_cfg["steps"]
     if guidance is None:
         guidance = style_cfg["guidance"]
+    if width is None:
+        width = style_cfg.get("width", width)
+    if height is None:
+        height = style_cfg.get("height", height)
 
     # Compose prompts
-    full_prompt = f"{style_cfg['prelude']}, {subject}".strip(", ")
+    prompt_parts = [style_cfg["prelude"], subject.strip()]
+    full_prompt = ", ".join(part for part in prompt_parts if part)
     full_negative = (style_cfg["negative"] + (", " + (negative or "") if negative else "")).strip(", ")
 
     raw, final_prompt, final_negative = render_sdxl(
         full_prompt, full_negative, seed, steps, guidance, width, height, model_id
     )
 
-    # Prefer plain-background chroma-key cutout; fallback to rembg if requested
-    if cutout_mode == "rembg":
+    # Generate alpha; default to rembg with tuned alpha-matting
+    if cutout_mode == "auto":
+        cutout, bg_used = cutout_by_bgcolor(raw, tol=10)
+    else:
         cutout = remove_bg_rgba(raw)
         bg_used = None
-    else:
-        cutout, bg_used = cutout_by_bgcolor(raw, tol=10)
 
-    # Outline for consistent sticker look
-    cutout = add_outline_rgba(cutout, outline_px=12, color=(255, 255, 255, 255))
+    # Matte bleed + cozy stroke for consistent sticker silhouette
+    cutout = apply_stroke_and_bleed(cutout)
 
     # Pad to square (transparent) and optionally frame
     tmp_cut = os.path.join("temp", f"{cid}_no_bg.png")
@@ -251,13 +254,15 @@ def run_generation(
         "cutout_mode": cutout_mode,
         "bg_color_detected": bg_used,
     }
+    if "refiner_strength" in style_cfg:
+        card_meta["refiner_strength"] = style_cfg["refiner_strength"]
     _write_json(os.path.join("assets", "meta", f"{cid}.json"), card_meta)
 
     manifest = _read_json(BUILD_MANIFEST) or {"cards": {}}
     manifest["cards"][cid] = card_meta
     _write_json(BUILD_MANIFEST, manifest)
 
-    print(f"✅ {final_path}")
+    print(f"[ok] {final_path}")
     return final_path
 
 
@@ -269,12 +274,12 @@ def main():
     ap.add_argument("--steps", type=int, default=None)
     ap.add_argument("--guidance", type=float, default=None)
     ap.add_argument("--padding", type=int, default=64)
-    ap.add_argument("--width", type=int, default=1024)
-    ap.add_argument("--height", type=int, default=1024)
+    ap.add_argument("--width", type=int, default=None)
+    ap.add_argument("--height", type=int, default=None)
     ap.add_argument("--model", default="stabilityai/stable-diffusion-xl-base-1.0")
     ap.add_argument("--frame", action="store_true", help="add subtle frame/shadow")
     ap.add_argument("--style", default=DEFAULT_STYLE, choices=list(STYLES.keys()))
-    ap.add_argument("--cutout", default="auto", choices=["auto", "rembg"], help="auto=color-key; rembg=segment")
+    ap.add_argument("--cutout", default="rembg", choices=["auto", "rembg"], help="auto=color-key; rembg=segment")
     args = ap.parse_args()
 
     run_generation(

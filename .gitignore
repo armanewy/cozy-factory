@@ -17,3 +17,4 @@ outputs/
 .eggs/
 *.egg-info/
 
+comfy/models/
