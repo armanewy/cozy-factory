@@ -9,14 +9,15 @@ def art_path(art_id: str) -> str:
     return os.path.join("assets", "art", "cards", f"{art_id}.png")
 
 
-def main(force: bool, keep_going: bool) -> None:
+def main(force: bool, keep_going: bool, style: str | None = None, lora: str | None = None) -> None:
     with open(CARDS, "r", encoding="utf-8") as f:
         cards = json.load(f)
 
     made, skipped = 0, 0
     for card in cards:
         art_id = card["art_id"]
-        prompt = card["art_prompt"]
+        # Prefer a clean subject field if present; fall back to legacy art_prompt
+        prompt = card.get("art_subject") or card.get("art_prompt")
         negative = card.get("negative", "")
         output_path = art_path(art_id)
 
@@ -35,6 +36,10 @@ def main(force: bool, keep_going: bool) -> None:
             "--negative",
             negative,
         ]
+        if style:
+            cmd += ["--style", style]
+        if lora:
+            cmd += ["--lora", lora]
         print("[run]", " ".join(cmd))
         try:
             subprocess.check_call(cmd)
@@ -52,5 +57,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--force", action="store_true")
     parser.add_argument("--continue", dest="keep_going", action="store_true", help="continue on individual card errors")
+    parser.add_argument("--style", default="cozy_sticker_v1", help="generation style to use")
+    parser.add_argument("--lora", default=None, help="optional LoRA weights path")
     args = parser.parse_args()
-    main(force=args.force, keep_going=args.keep_going)
+    main(force=args.force, keep_going=args.keep_going, style=args.style, lora=args.lora)

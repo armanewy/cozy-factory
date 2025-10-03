@@ -1,0 +1,60 @@
+{
+  "1": {
+    "inputs": {
+      "seed": 0,
+      "steps": 28,
+      "cfg": 6.5,
+      "sampler_name": "dpmpp_2m",
+      "scheduler": "karras",
+      "denoise": 1,
+      "model": ["2", 0],
+      "positive": ["4", 0],
+      "negative": ["5", 0],
+      "latent_image": ["3", 0]
+    },
+    "class_type": "KSampler",
+    "_meta": {"title": "KSAMPLER"}
+  },
+  "2": {
+    "inputs": {"ckpt_name": "sd_xl_base_1.0.safetensors"},
+    "class_type": "CheckpointLoaderSimple",
+    "_meta": {"title": "Load SDXL Base"}
+  },
+  "3": {
+    "inputs": {"width": 1024, "height": 1024, "batch_size": 1},
+    "class_type": "EmptyLatentImage",
+    "_meta": {"title": "Empty Latent Image"}
+  },
+  "4": {
+    "inputs": {
+      "text": "cozy kawaii sticker, single prop, front 3/4 view, chunky hand-inked line art, flat cel shading, soft ambient occlusion, smooth rounded shapes, pastel palette, minimal detail, clean silhouette, centered, product-shot composition, no text, no background — SUBJECT HERE",
+      "clip": ["2", 1]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {"title": "POS_PROMPT"}
+  },
+  "5": {
+    "inputs": {
+      "text": "photo, photorealistic, painterly texture, gritty, noisy, grainy, text, watermark, logo, busy scene, background, multiple objects, duplicates, people, animals, harsh shadows, glare",
+      "clip": ["2", 1]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {"title": "NEG_PROMPT"}
+  },
+  "6": {
+    "inputs": {"samples": ["1", 0], "vae": ["2", 2]},
+    "class_type": "VAEDecode",
+    "_meta": {"title": "VAE Decode"}
+  },
+  "7": {
+    "inputs": {"torchscript_jit": "default", "image": ["6", 0]},
+    "class_type": "InspyrenetRembg",
+    "_meta": {"title": "Inspyrenet Rembg"}
+  },
+  "8": {
+    "inputs": {"filename_prefix": "cards/cozy_sticker_v1", "images": ["7", 0]},
+    "class_type": "SaveImage",
+    "_meta": {"title": "Save Image"}
+  }
+}
+
