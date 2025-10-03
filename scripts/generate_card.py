@@ -29,7 +29,7 @@ STYLES = {
         ),
         "negative": (
             "photo, photorealistic, painterly texture, gritty, noisy, grainy, text, watermark, logo, "
-            "busy scene, background, multiple objects, duplicates, people, animals, harsh shadows, glare"
+            "busy scene, background, multiple objects, duplicates, people, harsh shadows, glare"
         ),
         "steps": 28,
         "guidance": 6.5,
