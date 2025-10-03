@@ -1,9 +1,9 @@
 {
   "id": "market_001",
-  "style": "cartoon_sticker",
-  "subject": "cartoon, cel-shaded, flat colors, bold outline, sticker, isometric, single object, centered, large scale, plain white background, clean silhouette, no scene, one market stall with a striped awning and a few crates of goods",
-  "prompt_final": "cartoon, cel-shaded, flat colors, bold outline, sticker, isometric, single object, centered, large scale, plain white background, clean silhouette, no scene, cartoon, cel-shaded, flat colors, bold outline, sticker, isometric, single object, centered, large scale, plain white background, clean silhouette, no scene",
-  "negative_final": "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, multiple, pair, duplicate, extra object, photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background",
+  "style": "cozy_sticker_v1",
+  "subject": "a small market stall with a striped awning and a few crates of goods",
+  "prompt_final": "cozy kawaii sticker, single prop, front 3/4 view, chunky hand-inked line art, flat cel shading, soft ambient occlusion, smooth rounded shapes, pastel palette, minimal detail, clean silhouette, centered, product-shot composition, no text, no background, a small market stall with a striped awning and a few crates of goods",
+  "negative_final": "photo, photorealistic, painterly texture, gritty, noisy, grainy, text, watermark, logo, busy scene, background, multiple objects, duplicates, people, harsh shadows, glare, photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background",
   "seed": 2400865294,
   "model_id": "stabilityai/stable-diffusion-xl-base-1.0",
   "scheduler": "DPMSolverMultistepScheduler",
@@ -15,7 +15,7 @@
   "torch": "2.6.0+cu124",
   "diffusers": "0.35.1",
   "platform": "Windows-11-10.0.26100-SP0",
-  "time_unix": 1759531253,
+  "time_unix": 1759533946,
   "cutout_mode": "rembg",
   "bg_color_detected": null
 }

@@ -1,10 +1,10 @@
 {
-  "id": "bakery_001",
+  "id": "dairy_001",
   "style": "cozy_sticker_v1",
-  "subject": "a compact bakery oven with a tray of warm bread, tiny chimney puff",
-  "prompt_final": "cozy kawaii sticker, single prop, front 3/4 view, chunky hand-inked line art, flat cel shading, soft ambient occlusion, smooth rounded shapes, pastel palette, minimal detail, clean silhouette, centered, product-shot composition, no text, no background, a compact bakery oven with a tray of warm bread, tiny chimney puff",
+  "subject": "a small creamery with a milk can and churn sign, tiny chimney puff",
+  "prompt_final": "cozy kawaii sticker, single prop, front 3/4 view, chunky hand-inked line art, flat cel shading, soft ambient occlusion, smooth rounded shapes, pastel palette, minimal detail, clean silhouette, centered, product-shot composition, no text, no background, a small creamery with a milk can and churn sign, tiny chimney puff",
   "negative_final": "photo, photorealistic, painterly texture, gritty, noisy, grainy, text, watermark, logo, busy scene, background, multiple objects, duplicates, people, harsh shadows, glare, photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background",
-  "seed": 4096709502,
+  "seed": 2440026226,
   "model_id": "stabilityai/stable-diffusion-xl-base-1.0",
   "scheduler": "DPMSolverMultistepScheduler",
   "steps": 28,
@@ -15,7 +15,7 @@
   "torch": "2.6.0+cu124",
   "diffusers": "0.35.1",
   "platform": "Windows-11-10.0.26100-SP0",
-  "time_unix": 1759533922,
+  "time_unix": 1759534094,
   "cutout_mode": "rembg",
   "bg_color_detected": null
 }
