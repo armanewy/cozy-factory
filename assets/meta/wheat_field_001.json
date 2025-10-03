@@ -9,13 +9,13 @@
   "scheduler": "DPMSolverMultistepScheduler",
   "steps": 28,
   "guidance": 6.5,
-  "width": null,
-  "height": null,
+  "width": 1024,
+  "height": 1024,
   "device": "cuda",
   "torch": "2.6.0+cu124",
   "diffusers": "0.35.1",
   "platform": "Windows-11-10.0.26100-SP0",
-  "time_unix": 1759079928,
+  "time_unix": 1759531107,
   "cutout_mode": "rembg",
   "bg_color_detected": null
 }

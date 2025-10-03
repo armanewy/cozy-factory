@@ -179,9 +179,26 @@ def run_generation(
     add_frame: bool,
     style: str,
     cutout_mode: str,
+    seed_arg: int | None,
+    reseed: bool = False,
 ):
     _ensure_dirs()
-    seed = seed_from_id(cid, subject)
+    meta_path = Path("assets") / "meta" / f"{cid}.json"
+    seed = seed_arg
+
+    # Prefer previous saved seed if present (stable across prompt edits)
+    if seed is None and not reseed:
+        prev = _read_json(str(meta_path))
+        if prev and "seed" in prev:
+            try:
+                seed = int(prev["seed"])
+            except Exception:
+                seed = None
+
+    # Fallback to ID-only seed (so prompts can change without shifting the seed)
+    if seed is None:
+        seed = seed_from_id(cid)
+
     style_cfg = STYLES[style]
 
     # Defaults from style if user didn't set
@@ -239,8 +256,8 @@ def run_generation(
         "scheduler": "DPMSolverMultistepScheduler",
         "steps": steps,
         "guidance": guidance,
-        "width": width,
-        "height": height,
+        "width": int(width),
+        "height": int(height),
         "device": "cuda" if torch.cuda.is_available() else "cpu",
         "torch": torch.__version__,
         "diffusers": __import__("diffusers").__version__,
@@ -251,6 +268,7 @@ def run_generation(
     }
     if "refiner_strength" in style_cfg:
         card_meta["refiner_strength"] = style_cfg["refiner_strength"]
+
     _write_json(os.path.join("assets", "meta", f"{cid}.json"), card_meta)
 
     manifest = _read_json(BUILD_MANIFEST) or {"cards": {}}
@@ -269,12 +287,14 @@ def main():
     ap.add_argument("--steps", type=int, default=None)
     ap.add_argument("--guidance", type=float, default=None)
     ap.add_argument("--padding", type=int, default=64)
-    ap.add_argument("--width", type=int, default=None)
-    ap.add_argument("--height", type=int, default=None)
+    ap.add_argument("--width", type=int, default=1024)
+    ap.add_argument("--height", type=int, default=1024)
     ap.add_argument("--model", default="stabilityai/stable-diffusion-xl-base-1.0")
     ap.add_argument("--frame", action="store_true", help="add subtle frame/shadow")
     ap.add_argument("--style", default=DEFAULT_STYLE, choices=list(STYLES.keys()))
     ap.add_argument("--cutout", default="rembg", choices=["auto", "rembg"], help="auto=color-key; rembg=segment")
+    ap.add_argument("--seed", type=int, default=None, help="explicit seed (overrides everything)")
+    ap.add_argument("--reseed", action="store_true", help="ignore previous seed and recompute")
     args = ap.parse_args()
 
     run_generation(
@@ -290,6 +310,8 @@ def main():
         add_frame=args.frame,
         style=args.style,
         cutout_mode=args.cutout,
+        seed_arg=args.seed,
+        reseed=args.reseed
     )
 
 
