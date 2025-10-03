@@ -9,7 +9,7 @@ def art_path(art_id: str) -> str:
     return os.path.join("assets", "art", "cards", f"{art_id}.png")
 
 
-def main(force: bool, keep_going: bool, style: str | None = None, lora: str | None = None) -> None:
+def main(force: bool, keep_going: bool, style: str | None = None, lora: str | None = None, steps: int | None = None, guidance: float | None = None) -> None:
     with open(CARDS, "r", encoding="utf-8") as f:
         cards = json.load(f)
 
@@ -40,6 +40,10 @@ def main(force: bool, keep_going: bool, style: str | None = None, lora: str | No
             cmd += ["--style", style]
         if lora:
             cmd += ["--lora", lora]
+        if steps is not None:
+            cmd += ["--steps", str(steps)]
+        if guidance is not None:
+            cmd += ["--guidance", str(guidance)]
         print("[run]", " ".join(cmd))
         try:
             subprocess.check_call(cmd)
@@ -59,5 +63,7 @@ if __name__ == "__main__":
     parser.add_argument("--continue", dest="keep_going", action="store_true", help="continue on individual card errors")
     parser.add_argument("--style", default="cozy_sticker_v1", help="generation style to use")
     parser.add_argument("--lora", default=None, help="optional LoRA weights path")
+    parser.add_argument("--steps", type=int, default=None, help="override steps")
+    parser.add_argument("--guidance", type=float, default=None, help="override guidance scale")
     args = parser.parse_args()
-    main(force=args.force, keep_going=args.keep_going, style=args.style, lora=args.lora)
+    main(force=args.force, keep_going=args.keep_going, style=args.style, lora=args.lora, steps=args.steps, guidance=args.guidance)

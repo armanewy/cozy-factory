@@ -59,7 +59,7 @@ DEFAULT_STYLE = "cozy_sticker_v1"
 BUILD_MANIFEST = "assets/meta/build_manifest.json"
 
 
-def clip_trim(pipe, text: str, budget: int = 75) -> str:
+def clip_trim(pipe, text: str, budget: int = 70) -> str:
     """Trim comma-separated prompt to fit SDXL's CLIP token budget (77)."""
     tok1 = pipe.tokenizer
     tok2 = getattr(pipe, "tokenizer_2", tok1)

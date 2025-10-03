@@ -18,6 +18,7 @@ STROKE_RGB: Tuple[int, int, int] = (42, 36, 32)
 STROKE_ALPHA: int = 180
 STROKE_PX: int = 3
 BLEED_RADIUS: int = 2
+OPEN_PX: int = 1  # mask cleanup (morphological open) to remove tiny specks
 
 
 def _ensure_rgba(image: Image.Image) -> Image.Image:
@@ -45,6 +46,16 @@ def alpha_bleed(image: Image.Image, blur_radius: int = BLEED_RADIUS) -> Image.Im
     result.paste(blurred, mask=transparent_mask)
     result.putalpha(alpha)
     return result
+
+
+def _open_mask(alpha: Image.Image, px: int) -> Image.Image:
+    """Morphological open (erode then dilate) to clean tiny specks and hairs in the mask."""
+    if px <= 0:
+        return alpha
+    k = max(3, px * 2 + 1)
+    eroded = alpha.filter(ImageFilter.MinFilter(k))
+    opened = eroded.filter(ImageFilter.MaxFilter(k))
+    return opened
 
 
 def outer_stroke(
@@ -80,9 +91,16 @@ def apply_stroke_and_bleed(
     stroke_px: int = STROKE_PX,
     stroke_rgb: Tuple[int, int, int] = STROKE_RGB,
     stroke_alpha: int = STROKE_ALPHA,
+    clean_open_px: int = OPEN_PX,
 ) -> Image.Image:
-    """Convenience helper that runs matte bleed first, then the outer stroke."""
-    with_bleed = alpha_bleed(image, blur_radius=bleed_radius)
+    """Run mask cleanup, matte bleed, then outer stroke to minimize edge artifacts."""
+    img = _ensure_rgba(image)
+    # Clean the alpha mask to remove tiny floaters before we expand/outline it
+    alpha = img.getchannel("A")
+    cleaned = _open_mask(alpha, px=clean_open_px)
+    img2 = img.copy()
+    img2.putalpha(cleaned)
+    with_bleed = alpha_bleed(img2, blur_radius=bleed_radius)
     return outer_stroke(with_bleed, px=stroke_px, rgb=stroke_rgb, alpha=stroke_alpha)
 
 
@@ -109,6 +127,7 @@ def process(
         stroke_px=stroke_px,
         stroke_rgb=stroke_rgb,
         stroke_alpha=stroke_alpha,
+        clean_open_px=OPEN_PX,
     )
     processed.save(dst_path, format="PNG")
     return dst_path

@@ -1,159 +1,343 @@
 [
-  {
-    "id": "wheat_field_001",
-    "name": "Wheat Field",
-    "rarity": "common",
-    "tags": ["farm", "resource"],
-    "art_id": "wheat_field_001",
-    "art_subject": "a rectangular patch of golden wheat in neat rows on a tiny soil tile, a few stones and tufts",
-    "negative": "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, multiple, pair, duplicate, extra object, group, cluster",
-    "produces": [{"resource": "wheat", "rate": 2}],
-    "consumes": [],
-    "cost": {"wood": 5}
-  },
-  {
-    "id": "mill_001",
-    "name": "Mill",
-    "rarity": "common",
-    "tags": ["processing", "building"],
-    "art_id": "mill_001",
-    "art_subject": "a small wooden grain mill with a water wheel and stone base, warm window glow",
-    "negative": "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, multiple, pair, duplicate, extra object, group, cluster",
-    "produces": [{"resource": "flour", "rate": 1}],
-    "consumes": [{"resource": "wheat", "rate": 2}],
-    "cost": {"wood": 8, "stone": 4}
-  },
-  {
-    "id": "bakery_001",
-    "name": "Bakery",
-    "rarity": "uncommon",
-    "tags": ["processing", "building"],
-    "art_id": "bakery_001",
-    "art_subject": "a compact bakery oven with a tray of warm bread, tiny chimney puff",
-    "negative": "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, multiple, pair, duplicate, extra object, group, cluster",
-    "produces": [{"resource": "bread", "rate": 1}],
-    "consumes": [{"resource": "flour", "rate": 1}],
-    "cost": {"wood": 10, "stone": 6}
-  },
-  {
-    "id": "market_001",
-    "name": "Market Stall",
-    "rarity": "common",
-    "tags": ["trade", "building"],
-    "art_id": "market_001",
-    "art_subject": "a small market stall with a striped awning and a few crates of goods",
-    "negative": "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, multiple, pair, duplicate, extra object, group, cluster",
-    "produces": [{"resource": "gold", "rate": 1}],
-    "consumes": [{"resource": "bread", "rate": 1}],
-    "cost": {"wood": 6}
-  },
-  {
-    "id": "lamp_post_001",
-    "name": "Lamp Post",
-    "rarity": "common",
-    "tags": ["decor"],
-    "art_id": "lamp_post_001",
-    "art_subject": "a vintage street lamp on a tiny round cobblestone base, glowing glass lantern",
-    "negative": "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, multiple, pair, duplicate, extra object, group, cluster",
-    "produces": [],
-    "consumes": [],
-    "cost": {"wood": 1, "iron": 1}
-  },
-  {
-    "id": "signboard_001",
-    "name": "Signboard",
-    "rarity": "common",
-    "tags": ["decor"],
-    "art_id": "signboard_001",
-    "art_subject": "a wooden hanging sign with carved trim on a metal bracket",
-    "negative": "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, multiple, pair, duplicate, extra object, group, cluster",
-    "produces": [],
-    "consumes": [],
-    "cost": {"wood": 2}
-  }
-  ,
-  {
-    "id": "water_pump_001",
-    "name": "Water Pump",
-    "rarity": "common",
-    "tags": ["utility", "building"],
-    "art_id": "water_pump_001",
-    "art_subject": "a small wooden water pump with a hand lever on a tiny stone base, little puddle",
-    "negative": "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, multiple, pair, duplicate, extra object",
-    "produces": [{"resource": "water", "rate": 2}],
-    "consumes": [],
-    "cost": {"wood": 4, "iron": 2}
-  },
-  {
-    "id": "farm_001",
-    "name": "Farmhouse",
-    "rarity": "common",
-    "tags": ["building"],
-    "art_id": "farm_001",
-    "art_subject": "a tiny farmhouse with a pitched roof and a short fence on a small grassy tile",
-    "negative": "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, duplicate",
-    "produces": [],
-    "consumes": [],
-    "cost": {"wood": 8, "stone": 3}
-  },
-  {
-    "id": "cow_001",
-    "name": "Cow",
-    "rarity": "uncommon",
-    "tags": ["farm", "animal"],
-    "art_id": "cow_001",
-    "art_subject": "a small round dairy cow with a little bell, standing on a tiny patch of grass",
-    "negative": "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, duplicate",
-    "produces": [{"resource": "milk", "rate": 1}],
-    "consumes": [{"resource": "water", "rate": 1}, {"resource": "wheat", "rate": 1}],
-    "cost": {"gold": 5}
-  },
-  {
-    "id": "dairy_001",
-    "name": "Dairy",
-    "rarity": "uncommon",
-    "tags": ["processing", "building"],
-    "art_id": "dairy_001",
-    "art_subject": "a small creamery with a milk can and churn sign, tiny chimney puff",
-    "negative": "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, duplicate",
-    "produces": [{"resource": "butter", "rate": 1}],
-    "consumes": [{"resource": "milk", "rate": 1}],
-    "cost": {"wood": 8, "stone": 4}
-  },
-  {
-    "id": "sugarcane_001",
-    "name": "Sugarcane",
-    "rarity": "common",
-    "tags": ["farm", "resource"],
-    "art_id": "sugarcane_001",
-    "art_subject": "a small patch of bright green sugarcane stalks on a tiny soil tile",
-    "negative": "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, duplicate",
-    "produces": [{"resource": "cane", "rate": 2}],
-    "consumes": [],
-    "cost": {"wood": 4}
-  },
-  {
-    "id": "sugar_mill_001",
-    "name": "Sugar Mill",
-    "rarity": "uncommon",
-    "tags": ["processing", "building"],
-    "art_id": "sugar_mill_001",
-    "art_subject": "a compact sugar mill with a tall vent and a sack labeled sugar, tiny steam puff",
-    "negative": "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, duplicate",
-    "produces": [{"resource": "sugar", "rate": 1}],
-    "consumes": [{"resource": "cane", "rate": 2}],
-    "cost": {"wood": 8, "stone": 4}
-  },
-  {
-    "id": "pastry_001",
-    "name": "Pastry",
-    "rarity": "uncommon",
-    "tags": ["processing", "building"],
-    "art_id": "pastry_001",
-    "art_subject": "a little pastry stand with a tray of buns and icing swirl, striped canopy",
-    "negative": "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, duplicate",
-    "produces": [{"resource": "pastry", "rate": 1}],
-    "consumes": [{"resource": "flour", "rate": 1}, {"resource": "sugar", "rate": 1}, {"resource": "butter", "rate": 1}],
-    "cost": {"wood": 10, "stone": 4}
-  }
+    {
+        "id":  "wheat_field_001",
+        "name":  "Wheat Field",
+        "rarity":  "common",
+        "tags":  [
+                     "farm",
+                     "resource"
+                 ],
+        "art_id":  "wheat_field_001",
+        "art_subject":  "a rectangular patch of golden wheat in neat rows on a tiny soil tile, a few stones and tufts",
+        "negative":  "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, multiple, pair, duplicate, extra object, group, cluster, no animals, animal, dog, cat, creature, character, face",
+        "produces":  [
+                         {
+                             "resource":  "wheat",
+                             "rate":  2
+                         }
+                     ],
+        "consumes":  [
+
+                     ],
+        "cost":  {
+                     "wood":  5
+                 }
+    },
+    {
+        "id":  "mill_001",
+        "name":  "Mill",
+        "rarity":  "common",
+        "tags":  [
+                     "processing",
+                     "building"
+                 ],
+        "art_id":  "mill_001",
+        "art_subject":  "a small wooden grain mill with a water wheel and stone base, warm window glow",
+        "negative":  "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, multiple, pair, duplicate, extra object, group, cluster, no animals, animal, dog, cat, creature, character, face",
+        "produces":  [
+                         {
+                             "resource":  "flour",
+                             "rate":  1
+                         }
+                     ],
+        "consumes":  [
+                         {
+                             "resource":  "wheat",
+                             "rate":  2
+                         }
+                     ],
+        "cost":  {
+                     "wood":  8,
+                     "stone":  4
+                 }
+    },
+    {
+        "id":  "bakery_001",
+        "name":  "Bakery",
+        "rarity":  "uncommon",
+        "tags":  [
+                     "processing",
+                     "building"
+                 ],
+        "art_id":  "bakery_001",
+        "art_subject":  "a compact bakery oven with a tray of warm bread, tiny chimney puff",
+        "negative":  "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, multiple, pair, duplicate, extra object, group, cluster, no animals, animal, dog, cat, creature, character, face",
+        "produces":  [
+                         {
+                             "resource":  "bread",
+                             "rate":  1
+                         }
+                     ],
+        "consumes":  [
+                         {
+                             "resource":  "flour",
+                             "rate":  1
+                         }
+                     ],
+        "cost":  {
+                     "wood":  10,
+                     "stone":  6
+                 }
+    },
+    {
+        "id":  "market_001",
+        "name":  "Market Stall",
+        "rarity":  "common",
+        "tags":  [
+                     "trade",
+                     "building"
+                 ],
+        "art_id":  "market_001",
+        "art_subject":  "a small market stall with a striped awning and a few crates of goods",
+        "negative":  "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, multiple, pair, duplicate, extra object, group, cluster, no animals, animal, dog, cat, creature, character, face",
+        "produces":  [
+                         {
+                             "resource":  "gold",
+                             "rate":  1
+                         }
+                     ],
+        "consumes":  [
+                         {
+                             "resource":  "bread",
+                             "rate":  1
+                         }
+                     ],
+        "cost":  {
+                     "wood":  6
+                 }
+    },
+    {
+        "id":  "lamp_post_001",
+        "name":  "Lamp Post",
+        "rarity":  "common",
+        "tags":  [
+                     "decor"
+                 ],
+        "art_id":  "lamp_post_001",
+        "art_subject":  "a vintage street lamp on a tiny round cobblestone base, glowing glass lantern",
+        "negative":  "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, multiple, pair, duplicate, extra object, group, cluster, no animals, animal, dog, cat, creature, character, face",
+        "produces":  [
+
+                     ],
+        "consumes":  [
+
+                     ],
+        "cost":  {
+                     "wood":  1,
+                     "iron":  1
+                 }
+    },
+    {
+        "id":  "signboard_001",
+        "name":  "Signboard",
+        "rarity":  "common",
+        "tags":  [
+                     "decor"
+                 ],
+        "art_id":  "signboard_001",
+        "art_subject":  "a wooden hanging sign with carved trim on a metal bracket",
+        "negative":  "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, multiple, pair, duplicate, extra object, group, cluster, no animals, animal, dog, cat, creature, character, face",
+        "produces":  [
+
+                     ],
+        "consumes":  [
+
+                     ],
+        "cost":  {
+                     "wood":  2
+                 }
+    },
+    {
+        "id":  "water_pump_001",
+        "name":  "Water Pump",
+        "rarity":  "common",
+        "tags":  [
+                     "utility",
+                     "building"
+                 ],
+        "art_id":  "water_pump_001",
+        "art_subject":  "a small wooden water pump with a hand lever on a tiny stone base, little puddle",
+        "negative":  "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, multiple, pair, duplicate, extra object, no animals, animal, dog, cat, creature, character, face",
+        "produces":  [
+                         {
+                             "resource":  "water",
+                             "rate":  2
+                         }
+                     ],
+        "consumes":  [
+
+                     ],
+        "cost":  {
+                     "wood":  4,
+                     "iron":  2
+                 }
+    },
+    {
+        "id":  "farm_001",
+        "name":  "Farmhouse",
+        "rarity":  "common",
+        "tags":  [
+                     "building"
+                 ],
+        "art_id":  "farm_001",
+        "art_subject":  "a tiny farmhouse with a pitched roof and a short fence on a small grassy tile",
+        "negative":  "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, duplicate, no animals, animal, dog, cat, creature, character, face",
+        "produces":  [
+
+                     ],
+        "consumes":  [
+
+                     ],
+        "cost":  {
+                     "wood":  8,
+                     "stone":  3
+                 }
+    },
+    {
+        "id":  "cow_001",
+        "name":  "Cow",
+        "rarity":  "uncommon",
+        "tags":  [
+                     "farm",
+                     "animal"
+                 ],
+        "art_id":  "cow_001",
+        "art_subject":  "a small round dairy cow with a little bell, standing on a tiny patch of grass",
+        "negative":  "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, duplicate",
+        "produces":  [
+                         {
+                             "resource":  "milk",
+                             "rate":  1
+                         }
+                     ],
+        "consumes":  [
+                         {
+                             "resource":  "water",
+                             "rate":  1
+                         },
+                         {
+                             "resource":  "wheat",
+                             "rate":  1
+                         }
+                     ],
+        "cost":  {
+                     "gold":  5
+                 }
+    },
+    {
+        "id":  "dairy_001",
+        "name":  "Dairy",
+        "rarity":  "uncommon",
+        "tags":  [
+                     "processing",
+                     "building"
+                 ],
+        "art_id":  "dairy_001",
+        "art_subject":  "a small creamery with a milk can and churn sign, tiny chimney puff",
+        "negative":  "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, duplicate, no animals, animal, dog, cat, creature, character, face",
+        "produces":  [
+                         {
+                             "resource":  "butter",
+                             "rate":  1
+                         }
+                     ],
+        "consumes":  [
+                         {
+                             "resource":  "milk",
+                             "rate":  1
+                         }
+                     ],
+        "cost":  {
+                     "wood":  8,
+                     "stone":  4
+                 }
+    },
+    {
+        "id":  "sugarcane_001",
+        "name":  "Sugarcane",
+        "rarity":  "common",
+        "tags":  [
+                     "farm",
+                     "resource"
+                 ],
+        "art_id":  "sugarcane_001",
+        "art_subject":  "a small patch of bright green sugarcane stalks on a tiny soil tile",
+        "negative":  "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, duplicate, no animals, animal, dog, cat, creature, character, face",
+        "produces":  [
+                         {
+                             "resource":  "cane",
+                             "rate":  2
+                         }
+                     ],
+        "consumes":  [
+
+                     ],
+        "cost":  {
+                     "wood":  4
+                 }
+    },
+    {
+        "id":  "sugar_mill_001",
+        "name":  "Sugar Mill",
+        "rarity":  "uncommon",
+        "tags":  [
+                     "processing",
+                     "building"
+                 ],
+        "art_id":  "sugar_mill_001",
+        "art_subject":  "a compact sugar mill with a tall vent and a sack labeled sugar, tiny steam puff",
+        "negative":  "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, duplicate, no animals, animal, dog, cat, creature, character, face",
+        "produces":  [
+                         {
+                             "resource":  "sugar",
+                             "rate":  1
+                         }
+                     ],
+        "consumes":  [
+                         {
+                             "resource":  "cane",
+                             "rate":  2
+                         }
+                     ],
+        "cost":  {
+                     "wood":  8,
+                     "stone":  4
+                 }
+    },
+    {
+        "id":  "pastry_001",
+        "name":  "Pastry",
+        "rarity":  "uncommon",
+        "tags":  [
+                     "processing",
+                     "building"
+                 ],
+        "art_id":  "pastry_001",
+        "art_subject":  "a little pastry stand with a tray of buns and icing swirl, striped canopy",
+        "negative":  "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, duplicate, no animals, animal, dog, cat, creature, character, face",
+        "produces":  [
+                         {
+                             "resource":  "pastry",
+                             "rate":  1
+                         }
+                     ],
+        "consumes":  [
+                         {
+                             "resource":  "flour",
+                             "rate":  1
+                         },
+                         {
+                             "resource":  "sugar",
+                             "rate":  1
+                         },
+                         {
+                             "resource":  "butter",
+                             "rate":  1
+                         }
+                     ],
+        "cost":  {
+                     "wood":  10,
+                     "stone":  4
+                 }
+    }
 ]
