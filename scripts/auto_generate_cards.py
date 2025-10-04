@@ -45,6 +45,45 @@ def ensure_dir(p: Path):
     p.parent.mkdir(parents=True, exist_ok=True)
 
 
+PROFILES: dict[str, dict[str, list[str] | str]] = {
+    "object": {
+        "pos_hint": "technical device, object, prop",
+        "neg": [
+            "animal, mascot, face, character, plush toy, eyes, cheeks",
+            "person, human, face",
+        ],
+    },
+    "nature": {
+        "pos_hint": "terrain tile, vegetation, plants, crops",
+        "neg": [
+            "robot, machine, device, metallic panel, console, monitor, screen, gauge",
+            "animal, mascot, face, character, plush toy, eyes, cheeks",
+        ],
+    },
+    "character": {
+        "pos_hint": "cute mascot character, animal",
+        "neg": [
+            "robot, machine, device, console, monitor, screen, gauge",
+            "building, factory, architecture",
+        ],
+    },
+}
+
+
+def profile_for_card(card: dict, style_default: str) -> str:
+    style = card.get("style", style_default) or ""
+    tags = [t.lower() for t in card.get("tags", [])]
+    if "nature" in style:
+        return "nature"
+    if "char" in style:
+        return "character"
+    if "animal" in tags:
+        return "character"
+    if any(t in tags for t in ("farm", "resource")) and "field" in card.get("name", "").lower():
+        return "nature"
+    return "object"
+
+
 def main(style_default: str, steps: int, guidance: float, attempts: int, force: bool):
     cards = load_cards()
     qa = CLIPGuard()
@@ -60,13 +99,11 @@ def main(style_default: str, steps: int, guidance: float, attempts: int, force: 
         style = card.get("style", style_default)
         neg = card.get("negative", "")
 
-        # Simple class prompts for QA
-        pos_text = subject
-        neg_texts = [
-            "animal, mascot, face, character, plush toy",
-            "person, human, face",
-            "robot, machine, device, control panel, monitor, screen",
-        ]
+        # Profile-driven QA setup
+        profile = profile_for_card(card, style_default)
+        prof = PROFILES[profile]
+        pos_text = f"{subject}. {prof['pos_hint']}"
+        neg_texts = list(prof["neg"])  # type: ignore[index]
 
         best = None
         best_seed = None
@@ -124,7 +161,7 @@ def main(style_default: str, steps: int, guidance: float, attempts: int, force: 
         ]
         subprocess.check_call(cmd)
         accepted += 1
-        print(f"[ok] {art_id} seed={best_seed} margin={best:.3f}")
+        print(f"[ok] {art_id} profile={profile} seed={best_seed} margin={best:.3f}")
 
     print(f"[done] accepted={accepted}")
 
@@ -138,4 +175,3 @@ if __name__ == "__main__":
     ap.add_argument("--force", action="store_true")
     args = ap.parse_args()
     main(args.style, args.steps, args.guidance, args.attempts, args.force)
-

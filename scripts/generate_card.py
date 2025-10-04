@@ -7,6 +7,7 @@ from pathlib import Path
 from PIL import Image, ImageChops
 import torch
 from diffusers import StableDiffusionXLPipeline, DPMSolverMultistepScheduler
+from transformers.utils import logging as hf_logging
 
 from seed_from_id import seed_from_id
 from pad_square import pad_square
@@ -16,6 +17,9 @@ if str(ROOT) not in sys.path:
     sys.path.append(str(ROOT))
 
 from tools.art_post.stroke_and_bleed import apply_stroke_and_bleed
+
+# Silence noisy tokenizer warnings; we hard-trim to budget ourselves
+hf_logging.set_verbosity_error()
 
 STYLES = {
     # New locked-in style matching assets/art/cards/bakery_002.png
@@ -105,29 +109,53 @@ DEFAULT_STYLE = "cozy_sticker_v1"
 BUILD_MANIFEST = "assets/meta/build_manifest.json"
 
 
-def clip_trim(pipe, text: str, budget: int = 70) -> str:
-    """Trim comma-separated prompt to fit SDXL's CLIP token budget (77)."""
+def clip_trim(pipe, text: str, budget: int = 72) -> str:
+    """Trim prompt to fit CLIP 77-token budget for both SDXL encoders.
+
+    Strategy:
+    1) Try comma-part trimming (keeps semantic chunks intact).
+    2) If still over, hard-trim by token count using tokenizer_1 and
+       iteratively shorten until both encoders <= budget.
+    """
     tok1 = pipe.tokenizer
     tok2 = getattr(pipe, "tokenizer_2", tok1)
 
-    def n_tokens(s: str) -> int:
-        return max(
-            len(tok1(s, return_tensors="pt").input_ids[0]),
-            len(tok2(s, return_tensors="pt").input_ids[0]),
-        )
+    def count_tokens(s: str) -> int:
+        # Use encode to avoid transformer warning spam
+        a = len(tok1.encode(s, add_special_tokens=True))
+        b = len(tok2.encode(s, add_special_tokens=True))
+        return max(a, b)
 
-    if n_tokens(text) <= budget:
+    def hard_trim(s: str) -> str:
+        # Trim using tokenizer_1 ids and ensure both encoders fit
+        ids = tok1.encode(s, add_special_tokens=True)
+        k = min(len(ids), budget)
+        # keep at least 1 token plus special tokens
+        while k > 1:
+            text_try = tok1.decode(ids[:k], skip_special_tokens=True)
+            if count_tokens(text_try) <= budget:
+                return text_try
+            k -= 1
+        return tok1.decode(ids[:budget], skip_special_tokens=True)
+
+    if count_tokens(text) <= budget:
         return text
 
-    parts = [p.strip() for p in text.split(",")]
-    out = []
+    # Step 1: chunk-based trim
+    parts = [p.strip() for p in text.split(",") if p.strip()]
+    out: list[str] = []
     for p in parts:
         trial = ", ".join(out + [p])
-        if n_tokens(trial) <= budget:
+        if count_tokens(trial) <= budget:
             out.append(p)
         else:
             break
-    return ", ".join(out)
+    chunked = ", ".join(out).strip(", ")
+    if chunked and count_tokens(chunked) <= budget:
+        return chunked
+
+    # Step 2: token-level fallback
+    return hard_trim(text)
 
 
 def _write_json(path: str, data: dict):
@@ -183,8 +211,8 @@ def render_sdxl(prompt, negative, seed, steps, guidance, width, height, model_id
                 m.to(dtype=dtype)
 
     # Trim prompts to avoid CLIP-length chatter
-    prompt_t = clip_trim(pipe, prompt, budget=75)
-    negative_t = clip_trim(pipe, negative or "", budget=75)
+    prompt_t = clip_trim(pipe, prompt, budget=60)
+    negative_t = clip_trim(pipe, negative or "", budget=60)
 
     generator = torch.Generator(device=device).manual_seed(seed)
     image = pipe(

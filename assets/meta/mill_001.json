@@ -2,9 +2,9 @@
   "id": "mill_001",
   "style": "cozy_sticker_v1",
   "subject": "a small wooden grain mill with a water wheel and stone base, warm window glow",
-  "prompt_final": "inanimate prop, technical device, object, cozy sticker icon, single inanimate prop object, front 3/4 view, chunky hand-inked line art, flat cel shading, soft ambient occlusion, smooth rounded shapes, pastel palette, minimal detail, clean silhouette, centered, product-shot composition, no text, no background",
-  "negative_final": "no animals, animal, mascot, character, creature, plush, toy, face, person, human, photo, photorealistic, painterly texture, gritty, noisy, grainy, text, watermark, logo, busy scene, background, multiple objects, duplicates, people, harsh shadows, glare, photo, realistic, painterly, textured",
-  "seed": 2218957695,
+  "prompt_final": "inanimate prop, technical device, object, cozy sticker icon, single inanimate prop object, front 3/4 view, chunky hand-inked line art, flat cel shading, soft ambient occlusion, smooth rounded shapes, pastel palette, minimal detail, clean silhouette, centered",
+  "negative_final": "no animals, animal, mascot, character, creature, plush, toy, face, person, human, photo, photorealistic, painterly texture, gritty, noisy, grainy, text, watermark, logo, busy scene, background, multiple objects, duplicates, people",
+  "seed": 1596993586,
   "model_id": "stabilityai/stable-diffusion-xl-base-1.0",
   "scheduler": "DPMSolverMultistepScheduler",
   "steps": 32,
@@ -15,7 +15,7 @@
   "torch": "2.6.0+cu124",
   "diffusers": "0.35.1",
   "platform": "Windows-11-10.0.26100-SP0",
-  "time_unix": 1759544650,
+  "time_unix": 1759545947,
   "cutout_mode": "rembg",
   "bg_color_detected": null
 }

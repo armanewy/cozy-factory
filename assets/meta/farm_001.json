@@ -2,9 +2,9 @@
   "id": "farm_001",
   "style": "cozy_sticker_v1",
   "subject": "a tiny farmhouse with a pitched roof and a short fence on a small grassy tile",
-  "prompt_final": "inanimate prop, technical device, object, cozy sticker icon, single inanimate prop object, front 3/4 view, chunky hand-inked line art, flat cel shading, soft ambient occlusion, smooth rounded shapes, pastel palette, minimal detail, clean silhouette, centered, product-shot composition, no text, no background",
-  "negative_final": "no animals, animal, mascot, character, creature, plush, toy, face, person, human, photo, photorealistic, painterly texture, gritty, noisy, grainy, text, watermark, logo, busy scene, background, multiple objects, duplicates, people, harsh shadows, glare, photo, realistic, painterly, textured",
-  "seed": 4132207180,
+  "prompt_final": "inanimate prop, technical device, object, cozy sticker icon, single inanimate prop object, front 3/4 view, chunky hand-inked line art, flat cel shading, soft ambient occlusion, smooth rounded shapes, pastel palette, minimal detail, clean silhouette, centered",
+  "negative_final": "no animals, animal, mascot, character, creature, plush, toy, face, person, human, photo, photorealistic, painterly texture, gritty, noisy, grainy, text, watermark, logo, busy scene, background, multiple objects, duplicates, people",
+  "seed": 1596993585,
   "model_id": "stabilityai/stable-diffusion-xl-base-1.0",
   "scheduler": "DPMSolverMultistepScheduler",
   "steps": 32,
@@ -15,7 +15,7 @@
   "torch": "2.6.0+cu124",
   "diffusers": "0.35.1",
   "platform": "Windows-11-10.0.26100-SP0",
-  "time_unix": 1759544852,
+  "time_unix": 1759546566,
   "cutout_mode": "rembg",
   "bg_color_detected": null
 }
