@@ -1,9 +1,9 @@
 {
   "id": "cow_001",
-  "style": "cozy_sticker_v1",
+  "style": "cozy_sticker_char_v1",
   "subject": "a small round dairy cow with a little bell, standing on a tiny patch of grass",
-  "prompt_final": "cozy kawaii sticker, single prop, front 3/4 view, chunky hand-inked line art, flat cel shading, soft ambient occlusion, smooth rounded shapes, pastel palette, minimal detail, clean silhouette, centered, product-shot composition, no text, no background, a small round dairy cow with a little bell, standing on a tiny patch of grass",
-  "negative_final": "photo, photorealistic, painterly texture, gritty, noisy, grainy, text, watermark, logo, busy scene, background, multiple objects, duplicates, people, harsh shadows, glare, photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background",
+  "prompt_final": "cozy sticker icon, cute mascot character, front 3/4 view, chunky hand-inked line art, flat cel shading, soft ambient occlusion, smooth rounded shapes, pastel palette, minimal detail, clean silhouette, centered, a small round dairy cow with a little bell, standing on a tiny patch of grass",
+  "negative_final": "photo, photorealistic, painterly texture, gritty, noisy, grainy, text, watermark, logo, busy scene, background, duplicates, people, harsh shadows, glare, photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, background, busy scene, duplicate",
   "seed": 3123513903,
   "model_id": "stabilityai/stable-diffusion-xl-base-1.0",
   "scheduler": "DPMSolverMultistepScheduler",
@@ -15,7 +15,7 @@
   "torch": "2.6.0+cu124",
   "diffusers": "0.35.1",
   "platform": "Windows-11-10.0.26100-SP0",
-  "time_unix": 1759536009,
+  "time_unix": 1759544886,
   "cutout_mode": "rembg",
   "bg_color_detected": null
 }

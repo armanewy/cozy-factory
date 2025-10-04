@@ -260,6 +260,8 @@ def run_generation(
     cutout_mode: str,
     seed_arg: int | None,
     reseed: bool = False,
+    output_path_override: str | None = None,
+    write_meta: bool = True,
 ):
     _ensure_dirs()
     meta_path = Path("assets") / "meta" / f"{cid}.json"
@@ -331,7 +333,11 @@ def run_generation(
     padded_path = os.path.join("temp", f"{cid}_padded.png")
     pad_square(tmp_cut, padded_path, padding=padding)
 
-    final_path = os.path.join("assets", "art", "cards", f"{cid}.png")
+    final_path = (
+        output_path_override
+        if output_path_override is not None
+        else os.path.join("assets", "art", "cards", f"{cid}.png")
+    )
     if add_frame:
         from frame_card import frame_card
         frame_card(padded_path, final_path)
@@ -365,11 +371,11 @@ def run_generation(
     if "refiner_strength" in style_cfg:
         card_meta["refiner_strength"] = style_cfg["refiner_strength"]
 
-    _write_json(os.path.join("assets", "meta", f"{cid}.json"), card_meta)
-
-    manifest = _read_json(BUILD_MANIFEST) or {"cards": {}}
-    manifest["cards"][cid] = card_meta
-    _write_json(BUILD_MANIFEST, manifest)
+    if write_meta and output_path_override is None:
+        _write_json(os.path.join("assets", "meta", f"{cid}.json"), card_meta)
+        manifest = _read_json(BUILD_MANIFEST) or {"cards": {}}
+        manifest["cards"][cid] = card_meta
+        _write_json(BUILD_MANIFEST, manifest)
 
     print(f"[ok] {final_path}")
     return final_path
@@ -392,6 +398,8 @@ def main():
     ap.add_argument("--cutout", default="style", choices=["style", "auto", "rembg"], help="style=use style default; auto=color-key; rembg=segment")
     ap.add_argument("--seed", type=int, default=None, help="explicit seed (overrides everything)")
     ap.add_argument("--reseed", action="store_true", help="ignore previous seed and recompute")
+    ap.add_argument("--out", default=None, help="override output path (for QA candidates)")
+    ap.add_argument("--no-meta", action="store_true", help="do not write metadata/manifests")
     args = ap.parse_args()
 
     run_generation(
@@ -409,7 +417,9 @@ def main():
         style=args.style,
         cutout_mode=args.cutout,
         seed_arg=args.seed,
-        reseed=args.reseed
+        reseed=args.reseed,
+        output_path_override=args.out,
+        write_meta=(not args.no_meta)
     )
 
 
