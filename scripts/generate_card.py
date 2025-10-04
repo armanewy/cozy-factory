@@ -33,8 +33,8 @@ STYLES = {
         ),
         # highest-priority negatives that must be kept even if we trim
         "priority_negative": "no animals, animal, mascot, character, creature, plush, toy, face, person, human",
-        # optional priority positive keywords
-        "priority_positive": "technical prop, device, object",
+        # optional priority positive keywords (object/building bias)
+        "priority_positive": "inanimate prop, technical device, object",
         "steps": 28,
         "guidance": 6.5,
         # Post-process sticker outline (around silhouette)
@@ -44,6 +44,28 @@ STYLES = {
         "bleed": 2,
         # Optional LoRA trigger token; used if --lora is passed
         "lora_token": "cozyStickerV1Style",
+    },
+    # Nature/vegetation variant to avoid machine bias on fields/crops
+    "cozy_sticker_nature_v1": {
+        "prelude": (
+            "cozy sticker icon, single terrain tile or vegetation cluster, front 3/4 isometric view, "
+            "chunky hand-inked line art, flat cel shading, soft ambient occlusion, smooth rounded shapes, "
+            "pastel palette, minimal detail, clean silhouette, centered, no text, no background"
+        ),
+        "negative": (
+            "photo, photorealistic, painterly texture, gritty, noisy, grainy, text, watermark, logo, "
+            "busy scene, background, duplicates, people, mascot, character, animal, face, robot, machine, device, screen, monitor, metallic panel, console"
+        ),
+        "steps": 28,
+        "guidance": 6.5,
+        "stroke_rgb": (255, 255, 255),
+        "stroke_alpha": 255,
+        "stroke_px": 28,
+        "bleed": 2,
+        "lora_token": "cozyStickerV1Style",
+        # nature bias
+        "priority_positive": "terrain tile, vegetation, plants, crops",
+        "priority_negative": "machine, device, screen, monitor, robot, metallic, console, gauge",
     },
     # Character/animal variant for cards that should be creatures (e.g., cow)
     "cozy_sticker_char_v1": {

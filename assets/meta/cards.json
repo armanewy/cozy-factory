@@ -1,4 +1,4 @@
-﻿[
+[
     {
         "id":  "wheat_field_001",
         "name":  "Wheat Field",
@@ -8,8 +8,9 @@
                      "resource"
                  ],
         "art_id":  "wheat_field_001",
+        "style": "cozy_sticker_nature_v1",
         "art_subject":  "a rectangular patch of golden wheat in neat rows on a tiny soil tile, a few stones and tufts",
-        "negative":  "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, multiple, pair, duplicate, extra object, group, cluster, no animals, animal, dog, cat, creature, character, face",
+        "negative":  "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, multiple, pair, duplicate, extra object, group, cluster, no animals, animal, dog, cat, creature, character, face, machine, device, screen, robot, metallic panel",
         "produces":  [
                          {
                              "resource":  "wheat",
@@ -262,8 +263,9 @@
                      "resource"
                  ],
         "art_id":  "sugarcane_001",
+        "style": "cozy_sticker_nature_v1",
         "art_subject":  "a small patch of bright green sugarcane stalks on a tiny soil tile",
-        "negative":  "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, duplicate, no animals, animal, dog, cat, creature, character, face",
+        "negative":  "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, duplicate, no animals, animal, dog, cat, creature, character, face, machine, device, screen, robot, metallic panel",
         "produces":  [
                          {
                              "resource":  "cane",
