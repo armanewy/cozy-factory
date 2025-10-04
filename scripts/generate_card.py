@@ -23,7 +23,7 @@ STYLES = {
     # programmatic white sticker outline in post for pixel-perfect consistency.
     "cozy_sticker_v1": {
         "prelude": (
-            "cozy kawaii sticker, single prop, front 3/4 view, chunky hand-inked line art, "
+            "cozy kawaii sticker, single inanimate prop object, front 3/4 view, chunky hand-inked line art, "
             "flat cel shading, soft ambient occlusion, smooth rounded shapes, pastel palette, "
             "minimal detail, clean silhouette, centered, product-shot composition, no text, no background"
         ),
@@ -31,6 +31,10 @@ STYLES = {
             "photo, photorealistic, painterly texture, gritty, noisy, grainy, text, watermark, logo, "
             "busy scene, background, multiple objects, duplicates, people, harsh shadows, glare"
         ),
+        # highest-priority negatives that must be kept even if we trim
+        "priority_negative": "no animals, animal, mascot, character, creature, plush, toy, face, person, human",
+        # optional priority positive keywords
+        "priority_positive": "technical prop, device, object",
         "steps": 28,
         "guidance": 6.5,
         # Post-process sticker outline (around silhouette)
@@ -119,7 +123,10 @@ def render_sdxl(prompt, negative, seed, steps, guidance, width, height, model_id
     # Optional LoRA for style locking
     if lora_path:
         try:
-            pipe.load_lora_weights(lora_path)
+            lora_input = lora_path
+            if os.path.isfile(lora_input):
+                lora_input = os.path.dirname(lora_input) or "."
+            pipe.load_lora_weights(lora_input)
         except Exception as e:
             print(f"[warn] failed to load LoRA '{lora_path}': {e}")
     pipe.scheduler = DPMSolverMultistepScheduler.from_config(pipe.scheduler.config)
@@ -242,12 +249,14 @@ def run_generation(
         height = style_cfg.get("height", height)
 
     # Compose prompts
-    prompt_parts = [style_cfg["prelude"], subject.strip()]
+    prompt_parts = [style_cfg.get("priority_positive", ""), style_cfg["prelude"], subject.strip()]
     # If a style LoRA is provided and this style defines a trigger token, include it
     if lora_path and style_cfg.get("lora_token"):
         prompt_parts.insert(0, style_cfg["lora_token"])  # put token first for stronger influence
     full_prompt = ", ".join(part for part in prompt_parts if part)
-    full_negative = (style_cfg["negative"] + (", " + (negative or "") if negative else "")).strip(", ")
+    # Priority negatives first to ensure they survive CLIP trimming
+    neg_parts = [style_cfg.get("priority_negative", ""), style_cfg["negative"], (negative or "")]
+    full_negative = ", ".join([p for p in neg_parts if p]).strip(", ")
 
     raw, final_prompt, final_negative = render_sdxl(
         full_prompt, full_negative, seed, steps, guidance, width, height, model_id, lora_path

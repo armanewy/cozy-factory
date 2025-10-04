@@ -1,4 +1,4 @@
-[
+﻿[
     {
         "id":  "wheat_field_001",
         "name":  "Wheat Field",
@@ -156,8 +156,8 @@
                      "building"
                  ],
         "art_id":  "water_pump_001",
-        "art_subject":  "a small wooden water pump with a hand lever on a tiny stone base, little puddle",
-        "negative":  "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, multiple, pair, duplicate, extra object, no animals, animal, dog, cat, creature, character, face",
+        "art_subject":  "a wooden hand water pump with a lever and metal spout feeding a circular stone basin of water",
+        "negative":  "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, background, busy scene, duplicate, animal, mascot, character, plush, face, person, human",
         "produces":  [
                          {
                              "resource":  "water",
