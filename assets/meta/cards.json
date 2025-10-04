@@ -137,7 +137,7 @@
                  ],
         "art_id":  "signboard_001",
         "art_subject":  "a wooden hanging sign with carved trim on a metal bracket",
-        "negative":  "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, multiple, pair, duplicate, extra object, group, cluster, no animals, animal, dog, cat, creature, character, face",
+        "negative":  "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, letters, words, glyphs, handwriting, engraving, dark background, black background, busy scene, multiple, pair, duplicate, extra object, group, cluster, no animals, animal, dog, cat, creature, character, face",
         "produces":  [
 
                      ],
@@ -181,7 +181,7 @@
                      "building"
                  ],
         "art_id":  "farm_001",
-        "art_subject":  "a tiny farmhouse with a pitched roof and a short fence on a small grassy tile",
+        "art_subject":  "a small farm plot: red barn and fence with a tiny patch of tilled rows and a hay bale on a grassy tile",
         "negative":  "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, duplicate, no animals, animal, dog, cat, creature, character, face",
         "produces":  [
 

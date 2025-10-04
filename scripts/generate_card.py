@@ -36,7 +36,7 @@ STYLES = {
             "busy scene, background, multiple objects, duplicates, people, harsh shadows, glare"
         ),
         # highest-priority negatives that must be kept even if we trim
-        "priority_negative": "no animals, animal, mascot, character, creature, plush, toy, face, person, human",
+        "priority_negative": "no animals, animal, mascot, character, creature, plush, toy, face, person, human, black and white, monochrome, grayscale",
         # optional priority positive keywords (object/building bias)
         "priority_positive": "inanimate prop, technical device, object",
         "steps": 28,
@@ -48,6 +48,10 @@ STYLES = {
         "bleed": 2,
         # Optional LoRA trigger token; used if --lora is passed
         "lora_token": "cozyStickerV1Style",
+        "cutout": "rembg",
+        "open_px": 2,
+        "cutout": "rembg",
+        "open_px": 2,
     },
     # Nature/vegetation variant to avoid machine bias on fields/crops
     "cozy_sticker_nature_v1": {
@@ -67,11 +71,11 @@ STYLES = {
         "stroke_px": 28,
         "bleed": 2,
         "lora_token": "cozyStickerV1Style",
-        "cutout": "rembg",
         # nature bias
         "priority_positive": "terrain tile, vegetation, plants, crops",
-        "priority_negative": "machine, device, screen, monitor, robot, metallic, console, gauge",
+        "priority_negative": "machine, device, screen, monitor, robot, metallic, console, gauge, black and white, monochrome, grayscale",
         "cutout": "auto",
+        "open_px": 1,
     },
     # Character/animal variant for cards that should be creatures (e.g., cow)
     "cozy_sticker_char_v1": {
@@ -352,6 +356,7 @@ def run_generation(
         stroke_px=int(style_cfg.get("stroke_px", 3)),
         stroke_rgb=tuple(style_cfg.get("stroke_rgb", (42, 36, 32))),
         stroke_alpha=int(style_cfg.get("stroke_alpha", 180)),
+        clean_open_px=int(style_cfg.get("open_px", 1)),
     )
 
     # Pad to square (transparent) and optionally frame
