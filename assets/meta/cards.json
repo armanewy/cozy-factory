@@ -1,4 +1,4 @@
-[
+﻿[
     {
         "id":  "wheat_field_001",
         "name":  "Wheat Field",
@@ -8,9 +8,9 @@
                      "resource"
                  ],
         "art_id":  "wheat_field_001",
-        "style": "cozy_sticker_nature_v1",
-        "art_subject":  "a rectangular patch of golden wheat in neat rows on a tiny soil tile, a few stones and tufts",
-        "negative":  "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, multiple, pair, duplicate, extra object, group, cluster, no animals, animal, dog, cat, creature, character, face, machine, device, screen, robot, metallic panel",
+        "style":  "cozy_sticker_nature_v1",
+        "art_subject":  "upright golden wheat stalks with heads pointing up, tidy vertical rows on a tiny soil tile, little stones and tufts",
+        "negative":  "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, multiple, pair, duplicate, extra object, group, cluster, no animals, animal, dog, cat, creature, character, face, machine, device, screen, robot, metallic panel, horizontal, flattened, top-down, empty patch, bare soil",
         "produces":  [
                          {
                              "resource":  "wheat",
@@ -89,8 +89,8 @@
                      "building"
                  ],
         "art_id":  "market_001",
-        "art_subject":  "a small market stall with a striped awning and a few crates of goods",
-        "negative":  "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, multiple, pair, duplicate, extra object, group, cluster, no animals, animal, dog, cat, creature, character, face",
+        "art_subject":  "a tiny cozy market stall: short striped awning, two small wooden crates with produce, simple counter, rounded shapes",
+        "negative":  "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, cluttered, many items, complex details, wires, gauges, signage, numbers, letters, no animals, animal, dog, cat, creature, character, face",
         "produces":  [
                          {
                              "resource":  "gold",
@@ -136,8 +136,8 @@
                      "decor"
                  ],
         "art_id":  "signboard_001",
-        "art_subject":  "a wooden hanging sign with carved trim on a metal bracket",
-        "negative":  "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, letters, words, glyphs, handwriting, engraving, dark background, black background, busy scene, multiple, pair, duplicate, extra object, group, cluster, no animals, animal, dog, cat, creature, character, face",
+        "art_subject":  "a blank wooden hanging sign with carved trim on a metal bracket",
+        "negative":  "photo, realistic, painterly, textured, grainy, noisy, blurry, text, letters, words, glyphs, numbers, watermark, logo, dark background, black background, busy scene, multiple, pair, duplicate, extra object, group, cluster, no animals, animal, dog, cat, creature, character, face",
         "produces":  [
 
                      ],
@@ -235,8 +235,8 @@
                      "building"
                  ],
         "art_id":  "dairy_001",
-        "art_subject":  "a small creamery with a milk can and churn sign, tiny chimney puff",
-        "negative":  "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, duplicate, no animals, animal, dog, cat, creature, character, face",
+        "art_subject":  "a tiny dairy: metal milk can and old-fashioned butter churn with wooden dasher, a little cheese wheel and milk bottle, tiny chimney puff",
+        "negative":  "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, complex machinery, wires, gauges, industrial, no animals, animal, dog, cat, creature, character, face",
         "produces":  [
                          {
                              "resource":  "butter",
@@ -263,9 +263,9 @@
                      "resource"
                  ],
         "art_id":  "sugarcane_001",
-        "style": "cozy_sticker_nature_v1",
-        "art_subject":  "a small patch of bright green sugarcane stalks on a tiny soil tile",
-        "negative":  "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, duplicate, no animals, animal, dog, cat, creature, character, face, machine, device, screen, robot, metallic panel",
+        "style":  "cozy_sticker_nature_v1",
+        "art_subject":  "two small bunches of tall segmented sugarcane stalks with visible nodes and long narrow blade leaves, a few bound canes on a tiny soil tile",
+        "negative":  "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, duplicate, no animals, animal, dog, cat, creature, character, face, machine, device, screen, robot, metallic panel, grass, lawn, short blades, wheat, wide field",
         "produces":  [
                          {
                              "resource":  "cane",
@@ -288,8 +288,8 @@
                      "building"
                  ],
         "art_id":  "sugar_mill_001",
-        "art_subject":  "an industrial sugar mill: short cylindrical body with vertical vent pipe, belt drive and hopper, small sack labeled sugar beside it; mechanical device, inanimate",
-        "negative":  "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, duplicate, no animals, animal, dog, cat, creature, character, face",
+        "art_subject":  "a simple cozy sugar mill: squat round body with one short vent pipe and a small top hopper, a tiny sack labeled sugar beside it, toy-like rounded parts",
+        "negative":  "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, duplicate, many parts, complex, industrial, wires, gauges, bolts, sharp edges, no animals, animal, dog, cat, creature, character, face",
         "produces":  [
                          {
                              "resource":  "sugar",

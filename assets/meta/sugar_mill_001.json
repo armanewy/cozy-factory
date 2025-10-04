@@ -3,7 +3,7 @@
   "style": "cozy_sticker_v1",
   "subject": "an industrial sugar mill: short cylindrical body with vertical vent pipe, belt drive and hopper, small sack labeled sugar beside it; mechanical device, inanimate",
   "prompt_final": "an industrial sugar mill: short cylindrical body with vertical vent pipe, belt drive and hopper, small sack labeled sugar beside it; mechanical device, inanimate, cozy sticker icon, single inanimate prop object, front 3/4 view, chunky hand-inked line art",
-  "negative_final": "no animals, animal, mascot, character, creature, plush, toy, face, person, human, photo, photorealistic, painterly texture, gritty, noisy, grainy, text, watermark, logo, busy scene, background, multiple objects, duplicates, people",
+  "negative_final": "no animals, animal, mascot, character, creature, plush, toy, face, person, human, black and white, monochrome, grayscale, photo, photorealistic, painterly texture, gritty, noisy, grainy, text, watermark, logo, busy scene, background",
   "seed": 2003558590,
   "model_id": "stabilityai/stable-diffusion-xl-base-1.0",
   "scheduler": "DPMSolverMultistepScheduler",
@@ -15,7 +15,7 @@
   "torch": "2.6.0+cu124",
   "diffusers": "0.35.1",
   "platform": "Windows-11-10.0.26100-SP0",
-  "time_unix": 1759586192,
+  "time_unix": 1759602043,
   "cutout_mode": "rembg",
   "bg_color_detected": null
 }

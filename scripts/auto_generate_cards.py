@@ -96,12 +96,14 @@ def profile_for_card(card: dict, style_default: str) -> str:
     return "object"
 
 
-def main(style_default: str, steps: int, guidance: float, attempts: int, force: bool):
+def main(style_default: str, steps: int, guidance: float, attempts: int, force: bool, only: list[str] | None = None):
     cards = load_cards()
     qa = CLIPGuard()
     cand_root = Path("temp/candidates")
     accepted = 0
     for card in cards:
+        if only and card["id"] not in only and card.get("art_id") not in only:
+            continue
         art_id = card["art_id"]
         out_final = Path("assets/art/cards/") / f"{art_id}.png"
         if out_final.exists() and not force:
@@ -191,5 +193,7 @@ if __name__ == "__main__":
     ap.add_argument("--guidance", type=float, default=6.5)
     ap.add_argument("--attempts", type=int, default=8, help="candidate seeds per card")
     ap.add_argument("--force", action="store_true")
+    ap.add_argument("--only", default=None, help="comma-separated list of ids to process")
     args = ap.parse_args()
-    main(args.style, args.steps, args.guidance, args.attempts, args.force)
+    only = [s.strip() for s in args.only.split(",")] if args.only else None
+    main(args.style, args.steps, args.guidance, args.attempts, args.force, only)

@@ -348,7 +348,14 @@ def run_generation(
         cutout = remove_bg_rgba(raw)
         bg_used = None
 
-    # Matte bleed + cozy stroke for consistent sticker silhouette
+    # Pre-pad before stroke so outline is never clipped at edges
+    tmp_cut = os.path.join("temp", f"{cid}_no_bg.png")
+    cutout.save(tmp_cut)
+    prepad = int(style_cfg.get("stroke_px", 28)) + 8
+    prepad_path = os.path.join("temp", f"{cid}_prepad.png")
+    pad_square(tmp_cut, prepad_path, padding=prepad)
+    cutout = Image.open(prepad_path).convert("RGBA")
+
     # Style-specific sticker outline and matte bleed
     cutout = apply_stroke_and_bleed(
         cutout,
@@ -359,12 +366,11 @@ def run_generation(
         clean_open_px=int(style_cfg.get("open_px", 1)),
     )
 
-    # Pad to square (transparent) and optionally frame
-    tmp_cut = os.path.join("temp", f"{cid}_no_bg.png")
-    cutout.save(tmp_cut)
-
+    # Final pad to square (transparent) and optionally frame
     padded_path = os.path.join("temp", f"{cid}_padded.png")
-    pad_square(tmp_cut, padded_path, padding=padding)
+    cutout.save(padded_path)
+    final_pad_path = os.path.join("temp", f"{cid}_padded2.png")
+    pad_square(padded_path, final_pad_path, padding=padding)
 
     final_path = (
         output_path_override
@@ -373,9 +379,9 @@ def run_generation(
     )
     if add_frame:
         from frame_card import frame_card
-        frame_card(padded_path, final_path)
+        frame_card(final_pad_path, final_path)
     else:
-        os.replace(padded_path, final_path)
+        os.replace(final_pad_path, final_path)
 
     # Per-card meta
     card_meta = {
