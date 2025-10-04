@@ -68,6 +68,7 @@ PROFILES: dict[str, dict[str, list[str] | str]] = {
         "neg": [
             "robot, machine, device, metallic panel, console, monitor, screen, gauge",
             "animal, mascot, face, character, plush toy, eyes, cheeks",
+            "pattern, repeating pattern, wallpaper, seamless, tiled, all-over print",
         ],
     },
     "character": {

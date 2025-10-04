@@ -1,10 +1,10 @@
 {
   "id": "sugarcane_001",
   "style": "cozy_sticker_nature_v1",
-  "subject": "tall segmented sugarcane stalks with visible nodes and long narrow blade leaves, a few bound canes and a small cluster on a tiny soil tile",
-  "prompt_final": "tall segmented sugarcane stalks with visible nodes and long narrow blade leaves, a few bound canes and a small cluster on a tiny soil tile, cozy sticker icon, single terrain tile or vegetation cluster, front 3/4 isometric view, chunky hand-inked line art, flat cel shading",
+  "subject": "two small bunches of tall segmented sugarcane stalks with visible nodes and long narrow blade leaves, a few bound canes on a tiny soil tile",
+  "prompt_final": "two small bunches of tall segmented sugarcane stalks with visible nodes and long narrow blade leaves, a few bound canes on a tiny soil tile, cozy sticker icon, single terrain tile or vegetation cluster, front 3/4 isometric view, chunky hand-inked line art",
   "negative_final": "machine, device, screen, monitor, robot, metallic, console, gauge, black and white, monochrome, grayscale, photo, photorealistic, painterly texture, gritty, noisy, grainy, text, watermark, logo, busy scene, background, duplicates, people",
-  "seed": 1451360947,
+  "seed": 1451360952,
   "model_id": "stabilityai/stable-diffusion-xl-base-1.0",
   "scheduler": "DPMSolverMultistepScheduler",
   "steps": 32,
@@ -15,11 +15,11 @@
   "torch": "2.6.0+cu124",
   "diffusers": "0.35.1",
   "platform": "Windows-11-10.0.26100-SP0",
-  "time_unix": 1759601649,
+  "time_unix": 1759605638,
   "cutout_mode": "auto",
   "bg_color_detected": [
-    193,
-    207,
-    134
+    244,
+    231,
+    198
   ]
 }

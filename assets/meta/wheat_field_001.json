@@ -1,8 +1,8 @@
 {
   "id": "wheat_field_001",
   "style": "cozy_sticker_nature_v1",
-  "subject": "upright golden wheat stalks with heads pointing up, in neat vertical rows on a small soil tile, a few stones and tufts",
-  "prompt_final": "upright golden wheat stalks with heads pointing up, in neat vertical rows on a small soil tile, a few stones and tufts, cozy sticker icon, single terrain tile or vegetation cluster, front 3/4 isometric view, chunky hand-inked line art, flat cel shading",
+  "subject": "upright golden wheat stalks with heads pointing up, tidy vertical rows on a tiny soil tile, little stones and tufts",
+  "prompt_final": "upright golden wheat stalks with heads pointing up, tidy vertical rows on a tiny soil tile, little stones and tufts, cozy sticker icon, single terrain tile or vegetation cluster, front 3/4 isometric view, chunky hand-inked line art, flat cel shading",
   "negative_final": "machine, device, screen, monitor, robot, metallic, console, gauge, black and white, monochrome, grayscale, photo, photorealistic, painterly texture, gritty, noisy, grainy, text, watermark, logo, busy scene, background, duplicates, people",
   "seed": 4130298442,
   "model_id": "stabilityai/stable-diffusion-xl-base-1.0",
@@ -15,11 +15,11 @@
   "torch": "2.6.0+cu124",
   "diffusers": "0.35.1",
   "platform": "Windows-11-10.0.26100-SP0",
-  "time_unix": 1759600174,
+  "time_unix": 1759603933,
   "cutout_mode": "auto",
   "bg_color_detected": [
-    222,
-    141,
+    227,
+    146,
     59
   ]
 }

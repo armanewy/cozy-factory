@@ -9,8 +9,8 @@
                  ],
         "art_id":  "wheat_field_001",
         "style":  "cozy_sticker_nature_v1",
-        "art_subject":  "upright golden wheat stalks with heads pointing up, tidy vertical rows on a tiny soil tile, little stones and tufts",
-        "negative":  "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, multiple, pair, duplicate, extra object, group, cluster, no animals, animal, dog, cat, creature, character, face, machine, device, screen, robot, metallic panel, horizontal, flattened, top-down, empty patch, bare soil",
+        "art_subject":  "a tiny soil tile patch with 3-4 short neat rows of upright golden wheat stalks with heads pointing up, centered composition, visible soil border",
+        "negative":  "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, multiple, pair, duplicate, extra object, group, cluster, horizontal, flattened, top-down, empty patch, bare soil, pattern, repeating pattern, wallpaper, seamless, tiled, machine, device, screen, robot, metallic panel, no animals, animal, dog, cat, creature, character, face",
         "produces":  [
                          {
                              "resource":  "wheat",

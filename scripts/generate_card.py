@@ -74,8 +74,8 @@ STYLES = {
         # nature bias
         "priority_positive": "terrain tile, vegetation, plants, crops",
         "priority_negative": "machine, device, screen, monitor, robot, metallic, console, gauge, black and white, monochrome, grayscale",
-        "cutout": "auto",
-        "open_px": 1,
+        "cutout": "rembg",
+        "open_px": 2,
     },
     # Character/animal variant for cards that should be creatures (e.g., cow)
     "cozy_sticker_char_v1": {

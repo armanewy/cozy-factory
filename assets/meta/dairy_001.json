@@ -1,10 +1,10 @@
 {
   "id": "dairy_001",
   "style": "cozy_sticker_v1",
-  "subject": "a small creamery with a milk can and churn sign, tiny chimney puff",
-  "prompt_final": "a small creamery with a milk can and churn sign, tiny chimney puff, cozy sticker icon, single inanimate prop object, front 3/4 view, chunky hand-inked line art, flat cel shading, soft ambient occlusion, smooth rounded shapes, pastel palette",
+  "subject": "a tiny dairy: metal milk can and old-fashioned butter churn with wooden dasher, a little cheese wheel and milk bottle, tiny chimney puff",
+  "prompt_final": "a tiny dairy: metal milk can and old-fashioned butter churn with wooden dasher, a little cheese wheel and milk bottle, tiny chimney puff, cozy sticker icon, single inanimate prop object, front 3/4 view, chunky hand-inked line art, flat cel shading",
   "negative_final": "no animals, animal, mascot, character, creature, plush, toy, face, person, human, black and white, monochrome, grayscale, photo, photorealistic, painterly texture, gritty, noisy, grainy, text, watermark, logo, busy scene, background",
-  "seed": 2440026227,
+  "seed": 2440026236,
   "model_id": "stabilityai/stable-diffusion-xl-base-1.0",
   "scheduler": "DPMSolverMultistepScheduler",
   "steps": 32,
@@ -15,7 +15,7 @@
   "torch": "2.6.0+cu124",
   "diffusers": "0.35.1",
   "platform": "Windows-11-10.0.26100-SP0",
-  "time_unix": 1759598301,
+  "time_unix": 1759605317,
   "cutout_mode": "rembg",
   "bg_color_detected": null
 }
