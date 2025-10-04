@@ -63,9 +63,11 @@ STYLES = {
         "stroke_px": 28,
         "bleed": 2,
         "lora_token": "cozyStickerV1Style",
+        "cutout": "rembg",
         # nature bias
         "priority_positive": "terrain tile, vegetation, plants, crops",
         "priority_negative": "machine, device, screen, monitor, robot, metallic, console, gauge",
+        "cutout": "auto",
     },
     # Character/animal variant for cards that should be creatures (e.g., cow)
     "cozy_sticker_char_v1": {
@@ -83,6 +85,7 @@ STYLES = {
         "stroke_px": 28,
         "bleed": 2,
         "lora_token": "cozyStickerV1Style",
+        "cutout": "rembg",
     },
     # keep your old look available if you want to compare side-by-side
     "cartoon_sticker": {
@@ -286,6 +289,9 @@ def run_generation(
         width = style_cfg.get("width", width)
     if height is None:
         height = style_cfg.get("height", height)
+    # Allow styles to define a preferred cutout mode
+    if cutout_mode == "style":
+        cutout_mode = style_cfg.get("cutout", "rembg")
 
     # Compose prompts
     prompt_parts = [style_cfg.get("priority_positive", ""), style_cfg["prelude"], subject.strip()]
@@ -301,7 +307,7 @@ def run_generation(
         full_prompt, full_negative, seed, steps, guidance, width, height, model_id, lora_path
     )
 
-    # Generate alpha; default to rembg with tuned alpha-matting
+    # Generate alpha (style default may request color-key 'auto')
     if cutout_mode == "auto":
         cutout, bg_used = cutout_by_bgcolor(raw, tol=10)
     else:
@@ -383,7 +389,7 @@ def main():
     ap.add_argument("--lora", default=None, help="optional LoRA weights path for style locking")
     ap.add_argument("--frame", action="store_true", help="add subtle frame/shadow")
     ap.add_argument("--style", default=DEFAULT_STYLE, choices=list(STYLES.keys()))
-    ap.add_argument("--cutout", default="rembg", choices=["auto", "rembg"], help="auto=color-key; rembg=segment")
+    ap.add_argument("--cutout", default="style", choices=["style", "auto", "rembg"], help="style=use style default; auto=color-key; rembg=segment")
     ap.add_argument("--seed", type=int, default=None, help="explicit seed (overrides everything)")
     ap.add_argument("--reseed", action="store_true", help="ignore previous seed and recompute")
     args = ap.parse_args()

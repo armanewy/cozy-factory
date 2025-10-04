@@ -65,10 +65,10 @@
     },
     "wheat_field_001": {
       "id": "wheat_field_001",
-      "style": "cozy_sticker_v1",
+      "style": "cozy_sticker_nature_v1",
       "subject": "a rectangular patch of golden wheat in neat rows on a tiny soil tile, a few stones and tufts",
-      "prompt_final": "technical prop, device, object, cozy sticker icon, single inanimate prop object, front 3/4 view, chunky hand-inked line art, flat cel shading, soft ambient occlusion, smooth rounded shapes, pastel palette, minimal detail, clean silhouette, centered, product-shot composition, no text, no background",
-      "negative_final": "no animals, animal, mascot, character, creature, plush, toy, face, person, human, photo, photorealistic, painterly texture, gritty, noisy, grainy, text, watermark, logo, busy scene, background, multiple objects, duplicates, people, harsh shadows, glare, low quality, deformed, extra fingers, blurry",
+      "prompt_final": "terrain tile, vegetation, plants, crops, cozy sticker icon, single terrain tile or vegetation cluster, front 3/4 isometric view, chunky hand-inked line art, flat cel shading, soft ambient occlusion, smooth rounded shapes, pastel palette, minimal detail, clean silhouette, centered, no text, no background",
+      "negative_final": "machine, device, screen, monitor, robot, metallic, console, gauge, photo, photorealistic, painterly texture, gritty, noisy, grainy, text, watermark, logo, busy scene, background, duplicates, people, mascot, character, animal, face, robot, machine, device, screen, monitor, metallic panel, console",
       "seed": 4130298431,
       "model_id": "stabilityai/stable-diffusion-xl-base-1.0",
       "scheduler": "DPMSolverMultistepScheduler",
@@ -80,7 +80,7 @@
       "torch": "2.6.0+cu124",
       "diffusers": "0.35.1",
       "platform": "Windows-11-10.0.26100-SP0",
-      "time_unix": 1759544164,
+      "time_unix": 1759544291,
       "cutout_mode": "rembg",
       "bg_color_detected": null
     },
