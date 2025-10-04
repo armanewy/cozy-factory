@@ -73,7 +73,7 @@ STYLES = {
         "lora_token": "cozyStickerV1Style",
         # nature bias
         "priority_positive": "terrain tile, vegetation, plants, crops",
-        "priority_negative": "machine, device, screen, monitor, robot, metallic, console, gauge, black and white, monochrome, grayscale",
+        "priority_negative": "machine, device, screen, monitor, robot, metallic, console, gauge, black and white, monochrome, grayscale, sky, clouds, sun, horizon, landscape, frame, border, panel",
         "cutout": "rembg",
         "open_px": 2,
     },
