@@ -74,8 +74,9 @@ STYLES = {
         # nature bias
         "priority_positive": "terrain tile, vegetation, plants, crops",
         "priority_negative": "machine, device, screen, monitor, robot, metallic, console, gauge, black and white, monochrome, grayscale, sky, clouds, sun, horizon, landscape, frame, border, panel",
-        "cutout": "rembg",
-        "open_px": 2,
+        "cutout": "auto",
+        "open_px": 1,
+        "close_px": 4,
     },
     # Character/animal variant for cards that should be creatures (e.g., cow)
     "cozy_sticker_char_v1": {
@@ -364,6 +365,7 @@ def run_generation(
             stroke_rgb=tuple(style_cfg.get("stroke_rgb", (42, 36, 32))),
             stroke_alpha=int(style_cfg.get("stroke_alpha", 180)),
             clean_open_px=int(style_cfg.get("open_px", 1)),
+            clean_close_px=int(style_cfg.get("close_px", 0)),
         )
 
     # Style-specific sticker outline and matte bleed

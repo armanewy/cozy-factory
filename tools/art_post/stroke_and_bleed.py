@@ -12,13 +12,15 @@ from pathlib import Path
 from typing import Iterable, Tuple
 
 from PIL import Image, ImageChops, ImageFilter
+from PIL import ImageDraw, ImageOps
 
 # Default stroke configuration (cozy dark brown, semi-opaque)
 STROKE_RGB: Tuple[int, int, int] = (42, 36, 32)
 STROKE_ALPHA: int = 180
 STROKE_PX: int = 3
 BLEED_RADIUS: int = 2
-OPEN_PX: int = 1  # mask cleanup (morphological open) to remove tiny specks
+OPEN_PX: int = 1   # remove tiny specks
+CLOSE_PX: int = 0  # fill tiny holes within the alpha
 
 
 def _ensure_rgba(image: Image.Image) -> Image.Image:
@@ -58,13 +60,57 @@ def _open_mask(alpha: Image.Image, px: int) -> Image.Image:
     return opened
 
 
+def _close_mask(alpha: Image.Image, px: int) -> Image.Image:
+    """Morphological close (dilate then erode) to fill small holes inside shapes."""
+    if px <= 0:
+        return alpha
+    k = max(3, px * 2 + 1)
+    dilated = alpha.filter(ImageFilter.MaxFilter(k))
+    closed = dilated.filter(ImageFilter.MinFilter(k))
+    return closed
+
+
+def _fill_holes_connected(alpha: Image.Image) -> Image.Image:
+    """Fill interior holes by flood-filling background from the edges and inverting.
+
+    This is robust against complex silhouettes where simple morphological closing
+    would either leave larger gaps or overgrow thin details.
+    """
+    if alpha.mode != "L":
+        a = alpha.convert("L")
+    else:
+        a = alpha.copy()
+
+    # Binary view of alpha
+    bin_a = a.point(lambda v: 255 if v > 0 else 0, "L")
+    # Invert: background and holes are white, foreground black
+    inv = ImageOps.invert(bin_a)
+    # Work in RGB for floodfill API
+    work = inv.convert("RGB")
+    w, h = work.size
+    # Flood-fill from the 4 corners to mark the true background
+    for seed in [(0, 0), (w - 1, 0), (0, h - 1), (w - 1, h - 1)]:
+        ImageDraw.floodfill(work, seed, value=(0, 0, 0), thresh=2)
+    # Remaining white regions are enclosed holes
+    holes = work.convert("L").point(lambda v: 255 if v > 128 else 0, "L")
+    # Fill holes in the original alpha
+    filled = a.copy()
+    filled.paste(255, mask=holes)
+    return filled
+
+
 def outer_stroke(
     image: Image.Image,
     px: int = STROKE_PX,
     rgb: Tuple[int, int, int] = STROKE_RGB,
     alpha: int = STROKE_ALPHA,
 ) -> Image.Image:
-    """Grow alpha outward and paint it with a semi-opaque stroke color."""
+    """Grow alpha outward and paint it with a semi-opaque stroke color.
+
+    This version creates an OUTSIDE-ONLY stroke by eroding the base alpha
+    before subtracting from the expanded alpha. This prevents rings drawn
+    inside tiny intrusions/holes of the mask.
+    """
     if px <= 0 or alpha <= 0:
         return _ensure_rgba(image)
 
@@ -76,7 +122,9 @@ def outer_stroke(
 
     kernel = max(3, px * 2 + 1)
     expanded = base_alpha.filter(ImageFilter.MaxFilter(kernel))
-    stroke_mask = ImageChops.subtract(expanded, base_alpha)
+    # Erode inward so interior bumps don't produce an interior stroke
+    eroded = base_alpha.filter(ImageFilter.MinFilter(kernel))
+    stroke_mask = ImageChops.subtract(expanded, eroded)
     if stroke_mask.getbbox() is None:
         return rgba
 
@@ -92,14 +140,19 @@ def apply_stroke_and_bleed(
     stroke_rgb: Tuple[int, int, int] = STROKE_RGB,
     stroke_alpha: int = STROKE_ALPHA,
     clean_open_px: int = OPEN_PX,
+    clean_close_px: int = CLOSE_PX,
 ) -> Image.Image:
-    """Run mask cleanup, matte bleed, then outer stroke to minimize edge artifacts."""
+    """Run hole-fill (close), speckle-clean (open), matte bleed, then outer stroke."""
     img = _ensure_rgba(image)
-    # Clean the alpha mask to remove tiny floaters before we expand/outline it
     alpha = img.getchannel("A")
-    cleaned = _open_mask(alpha, px=clean_open_px)
+    # Fill small holes first so the stroke won't appear inside shapes
+    # First fill topological holes using flood-fill; then small morphological cleanups
+    alpha = _fill_holes_connected(alpha)
+    alpha = _close_mask(alpha, px=clean_close_px)
+    # Remove tiny floating pixels
+    alpha = _open_mask(alpha, px=clean_open_px)
     img2 = img.copy()
-    img2.putalpha(cleaned)
+    img2.putalpha(alpha)
     with_bleed = alpha_bleed(img2, blur_radius=bleed_radius)
     return outer_stroke(with_bleed, px=stroke_px, rgb=stroke_rgb, alpha=stroke_alpha)
 

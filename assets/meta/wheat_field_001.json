@@ -4,7 +4,7 @@
   "subject": "a tiny soil tile patch with 3-4 short neat rows of upright golden wheat stalks with heads pointing up, centered composition, visible soil border",
   "prompt_final": "a tiny soil tile patch with 3-4 short neat rows of upright golden wheat stalks with heads pointing up, centered composition, visible soil border, cozy sticker icon, single terrain tile or vegetation cluster, front 3/4 isometric view, chunky hand-inked line art, flat cel shading",
   "negative_final": "machine, device, screen, monitor, robot, metallic, console, gauge, black and white, monochrome, grayscale, sky, clouds, sun, horizon, landscape, frame, border, panel, photo, photorealistic, painterly texture, gritty, noisy, grainy",
-  "seed": 4130298431,
+  "seed": 4130298433,
   "model_id": "stabilityai/stable-diffusion-xl-base-1.0",
   "scheduler": "DPMSolverMultistepScheduler",
   "steps": 32,
@@ -15,7 +15,11 @@
   "torch": "2.6.0+cu124",
   "diffusers": "0.35.1",
   "platform": "Windows-11-10.0.26100-SP0",
-  "time_unix": 1759614914,
-  "cutout_mode": "rembg",
-  "bg_color_detected": null
+  "time_unix": 1759617576,
+  "cutout_mode": "auto",
+  "bg_color_detected": [
+    250,
+    206,
+    127
+  ]
 }
