@@ -203,7 +203,7 @@
                  ],
         "art_id":  "cow_001",
         "art_subject":  "a small round dairy cow with a little bell, standing on a tiny patch of grass",
-        "negative":  "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, duplicate",
+        "negative":  "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, background, busy scene, duplicate",
         "produces":  [
                          {
                              "resource":  "milk",
@@ -222,7 +222,8 @@
                      ],
         "cost":  {
                      "gold":  5
-                 }
+                 },
+        "style":  "cozy_sticker_char_v1"
     },
     {
         "id":  "dairy_001",
@@ -285,7 +286,7 @@
                      "building"
                  ],
         "art_id":  "sugar_mill_001",
-        "art_subject":  "a compact sugar mill with a tall vent and a sack labeled sugar, tiny steam puff",
+        "art_subject":  "an industrial sugar mill: short cylindrical body with vertical vent pipe, belt drive and hopper, small sack labeled sugar beside it; mechanical device, inanimate",
         "negative":  "photo, realistic, painterly, textured, grainy, noisy, blurry, text, watermark, logo, dark background, black background, busy scene, duplicate, no animals, animal, dog, cat, creature, character, face",
         "produces":  [
                          {

@@ -23,7 +23,7 @@ STYLES = {
     # programmatic white sticker outline in post for pixel-perfect consistency.
     "cozy_sticker_v1": {
         "prelude": (
-            "cozy kawaii sticker, single inanimate prop object, front 3/4 view, chunky hand-inked line art, "
+            "cozy sticker icon, single inanimate prop object, front 3/4 view, chunky hand-inked line art, "
             "flat cel shading, soft ambient occlusion, smooth rounded shapes, pastel palette, "
             "minimal detail, clean silhouette, centered, product-shot composition, no text, no background"
         ),
@@ -43,6 +43,23 @@ STYLES = {
         "stroke_px": 28,
         "bleed": 2,
         # Optional LoRA trigger token; used if --lora is passed
+        "lora_token": "cozyStickerV1Style",
+    },
+    # Character/animal variant for cards that should be creatures (e.g., cow)
+    "cozy_sticker_char_v1": {
+        "prelude": (
+            "cozy sticker icon, cute mascot character, front 3/4 view, chunky hand-inked line art, "
+            "flat cel shading, soft ambient occlusion, smooth rounded shapes, pastel palette, minimal detail, clean silhouette, centered"
+        ),
+        "negative": (
+            "photo, photorealistic, painterly texture, gritty, noisy, grainy, text, watermark, logo, busy scene, background, duplicates, people, harsh shadows, glare"
+        ),
+        "steps": 28,
+        "guidance": 6.5,
+        "stroke_rgb": (255, 255, 255),
+        "stroke_alpha": 255,
+        "stroke_px": 28,
+        "bleed": 2,
         "lora_token": "cozyStickerV1Style",
     },
     # keep your old look available if you want to compare side-by-side

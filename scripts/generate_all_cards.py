@@ -36,8 +36,10 @@ def main(force: bool, keep_going: bool, style: str | None = None, lora: str | No
             "--negative",
             negative,
         ]
-        if style:
-            cmd += ["--style", style]
+        # allow per-card style override
+        card_style = card.get("style") or style
+        if card_style:
+            cmd += ["--style", card_style]
         if lora:
             cmd += ["--lora", lora]
         if steps is not None:
