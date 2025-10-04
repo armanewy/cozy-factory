@@ -354,17 +354,37 @@ def run_generation(
     prepad = int(style_cfg.get("stroke_px", 28)) + 8
     prepad_path = os.path.join("temp", f"{cid}_prepad.png")
     pad_square(tmp_cut, prepad_path, padding=prepad)
-    cutout = Image.open(prepad_path).convert("RGBA")
+    base_no_stroke = Image.open(prepad_path).convert("RGBA")
+
+    def make_stroke(src_img: Image.Image) -> Image.Image:
+        return apply_stroke_and_bleed(
+            src_img,
+            bleed_radius=int(style_cfg.get("bleed", 2)),
+            stroke_px=int(style_cfg.get("stroke_px", 3)),
+            stroke_rgb=tuple(style_cfg.get("stroke_rgb", (42, 36, 32))),
+            stroke_alpha=int(style_cfg.get("stroke_alpha", 180)),
+            clean_open_px=int(style_cfg.get("open_px", 1)),
+        )
 
     # Style-specific sticker outline and matte bleed
-    cutout = apply_stroke_and_bleed(
-        cutout,
-        bleed_radius=int(style_cfg.get("bleed", 2)),
-        stroke_px=int(style_cfg.get("stroke_px", 3)),
-        stroke_rgb=tuple(style_cfg.get("stroke_rgb", (42, 36, 32))),
-        stroke_alpha=int(style_cfg.get("stroke_alpha", 180)),
-        clean_open_px=int(style_cfg.get("open_px", 1)),
-    )
+    cutout = make_stroke(base_no_stroke)
+    # Safety: if stroke touches canvas edges, add more pad and re-stroke
+    def touches_edge(img: Image.Image, margin: int = 1) -> bool:
+        a = img.getchannel("A")
+        bbox = a.getbbox()
+        if not bbox:
+            return False
+        x0, y0, x1, y1 = bbox
+        w, h = img.size
+        return x0 <= margin or y0 <= margin or x1 >= w - margin or y1 >= h - margin
+
+    if touches_edge(cutout, margin=2):
+        extra = int(style_cfg.get("stroke_px", 28)) + 12
+        extra_path = os.path.join("temp", f"{cid}_prepad_extra.png")
+        base_no_stroke.save(tmp_cut)
+        pad_square(tmp_cut, extra_path, padding=extra)
+        base_no_stroke = Image.open(extra_path).convert("RGBA")
+        cutout = make_stroke(base_no_stroke)
 
     # Final pad to square (transparent) and optionally frame
     padded_path = os.path.join("temp", f"{cid}_padded.png")
