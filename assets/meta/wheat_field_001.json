@@ -2,9 +2,9 @@
   "id": "wheat_field_001",
   "style": "cozy_sticker_nature_v1",
   "subject": "a rectangular patch of golden wheat in neat rows on a tiny soil tile, a few stones and tufts",
-  "prompt_final": "terrain tile, vegetation, plants, crops, cozy sticker icon, single terrain tile or vegetation cluster, front 3/4 isometric view, chunky hand-inked line art, flat cel shading, soft ambient occlusion, smooth rounded shapes, pastel palette, minimal detail, clean silhouette",
+  "prompt_final": "a rectangular patch of golden wheat in neat rows on a tiny soil tile, a few stones and tufts, cozy sticker icon, single terrain tile or vegetation cluster, front 3/4 isometric view, chunky hand-inked line art, flat cel shading, soft ambient occlusion",
   "negative_final": "machine, device, screen, monitor, robot, metallic, console, gauge, photo, photorealistic, painterly texture, gritty, noisy, grainy, text, watermark, logo, busy scene, background, duplicates, people, mascot, character, animal, face",
-  "seed": 1596993587,
+  "seed": 4130298435,
   "model_id": "stabilityai/stable-diffusion-xl-base-1.0",
   "scheduler": "DPMSolverMultistepScheduler",
   "steps": 32,
@@ -15,11 +15,11 @@
   "torch": "2.6.0+cu124",
   "diffusers": "0.35.1",
   "platform": "Windows-11-10.0.26100-SP0",
-  "time_unix": 1759580657,
+  "time_unix": 1759584056,
   "cutout_mode": "auto",
   "bg_color_detected": [
-    207,
-    219,
-    179
+    194,
+    129,
+    54
   ]
 }
