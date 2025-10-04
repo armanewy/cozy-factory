@@ -323,11 +323,11 @@ def run_generation(
     if cutout_mode == "style":
         cutout_mode = style_cfg.get("cutout", "rembg")
 
-    # Compose prompts
-    prompt_parts = [style_cfg.get("priority_positive", ""), style_cfg["prelude"], subject.strip()]
-    # If a style LoRA is provided and this style defines a trigger token, include it
+    # Compose prompts (subject first so trimming preserves it)
+    prompt_parts = [subject.strip(), style_cfg["prelude"]]
+    # If a style LoRA token is provided, append it (lower influence than subject)
     if lora_path and style_cfg.get("lora_token"):
-        prompt_parts.insert(0, style_cfg["lora_token"])  # put token first for stronger influence
+        prompt_parts.append(style_cfg["lora_token"])
     full_prompt = ", ".join(part for part in prompt_parts if part)
     # Priority negatives first to ensure they survive CLIP trimming
     neg_parts = [style_cfg.get("priority_negative", ""), style_cfg["negative"], (negative or "")]

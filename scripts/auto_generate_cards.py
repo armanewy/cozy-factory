@@ -4,6 +4,7 @@ import math
 import os
 import subprocess
 from pathlib import Path
+from seed_from_id import seed_from_id
 
 import torch
 from PIL import Image
@@ -47,21 +48,30 @@ def ensure_dir(p: Path):
 
 PROFILES: dict[str, dict[str, list[str] | str]] = {
     "object": {
-        "pos_hint": "technical device, object, prop",
+        "pos_hint": "",
         "neg": [
             "animal, mascot, face, character, plush toy, eyes, cheeks",
-            "person, human, face",
+            "appliance, blender, coffee machine, microwave, kitchen device",
+            "monitor, screen, UI panel, display",
+        ],
+    },
+    "building": {
+        "pos_hint": "",
+        "neg": [
+            "appliance, blender, coffee machine, microwave, kitchen device",
+            "monitor, screen, UI panel, display",
+            "animal, mascot, face, character, plush toy",
         ],
     },
     "nature": {
-        "pos_hint": "terrain tile, vegetation, plants, crops",
+        "pos_hint": "",
         "neg": [
             "robot, machine, device, metallic panel, console, monitor, screen, gauge",
             "animal, mascot, face, character, plush toy, eyes, cheeks",
         ],
     },
     "character": {
-        "pos_hint": "cute mascot character, animal",
+        "pos_hint": "",
         "neg": [
             "robot, machine, device, console, monitor, screen, gauge",
             "building, factory, architecture",
@@ -79,6 +89,8 @@ def profile_for_card(card: dict, style_default: str) -> str:
         return "character"
     if "animal" in tags:
         return "character"
+    if "building" in tags:
+        return "building"
     if any(t in tags for t in ("farm", "resource")) and "field" in card.get("name", "").lower():
         return "nature"
     return "object"
@@ -102,13 +114,15 @@ def main(style_default: str, steps: int, guidance: float, attempts: int, force: 
         # Profile-driven QA setup
         profile = profile_for_card(card, style_default)
         prof = PROFILES[profile]
-        pos_text = f"{subject}. {prof['pos_hint']}"
+        # Keep positive strictly the literal subject to avoid mode collapse
+        pos_text = subject
+        # Class-specific negatives only
         neg_texts = list(prof["neg"])  # type: ignore[index]
 
         best = None
         best_seed = None
-        # Try a small seed window, keep the best margin
-        base_seed = int.from_bytes(art_id.encode("utf-8"), "big") & 0xFFFFFFFF
+        # Try a small seed window based on a proper hash of the id
+        base_seed = seed_from_id(art_id)
         for seed in seed_stream(base_seed, attempts):
             cand_path = cand_root / f"{art_id}__{seed}.png"
             ensure_dir(cand_path)
