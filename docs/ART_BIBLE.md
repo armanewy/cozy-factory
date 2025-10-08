@@ -23,9 +23,9 @@ Post‑process (programmatic, not prompt)
 - The generator pre‑pads, draws the outline, checks edges, and re‑strokes with extra pad if the outline touches the canvas.
 
 Profiles & cutout
-- cozy_sticker_v1 (default): objects/buildings; segmentation cutout; bans faces/mascots.
-- cozy_sticker_nature_v1: crops/terrain; bans machines/screens/pattern/landscape/sky; uses color‑key or segmentation depending on the card.
+- cozy_sticker_v1 (default): objects/buildings and vegetation; segmentation cutout.
 - cozy_sticker_char_v1: animals/mascots; segmentation cutout.
+  - Note: crops/terrain use the default style plus per‑card negatives to ban sky/landscape/patterns instead of a separate nature style.
 
 Subject strings (what varies per card)
 - Keep short and literal; style words are centralized in the generator.
@@ -44,7 +44,7 @@ ComfyUI parity (optional)
 - Use sampler `dpmpp_2m` + scheduler `karras`, 28 steps, cfg 6.5, SDXL base. Extract alpha via Rembg (or color key), then add the white sticker outline in post.
 
 QA & seed search (recommended)
-- `scripts/auto_generate_cards.py` creates N candidates per card with unique seeds, scores them with CLIP, and picks the best subject‑matching seed. Profiles (object/building/nature/character) select class‑specific negatives to avoid drift (e.g., nature blocks wallpaper/landscape).
+- `scripts/auto_generate_cards.py` creates N candidates per card with unique seeds, scores them with CLIP, and picks the best subject-matching seed. Profiles (object/building/character) select class-specific negatives; vegetation-specific negatives are provided per card.
 
 Principles
 - Style consistency lives in one place (this file + generator defaults). Card JSON only provides the subject and optional per‑card negatives.

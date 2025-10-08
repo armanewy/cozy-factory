@@ -54,31 +54,6 @@ STYLES = {
         "cutout": "rembg",
         "open_px": 2,
     },
-    # Nature/vegetation variant to avoid machine bias on fields/crops
-    "cozy_sticker_nature_v1": {
-        "prelude": (
-            "cozy sticker icon, single terrain tile or vegetation cluster, front 3/4 isometric view, "
-            "chunky hand-inked line art, flat cel shading, soft ambient occlusion, smooth rounded shapes, "
-            "pastel palette, minimal detail, clean silhouette, centered, no text, no background"
-        ),
-        "negative": (
-            "photo, photorealistic, painterly texture, gritty, noisy, grainy, text, watermark, logo, "
-            "busy scene, background, duplicates, people, mascot, character, animal, face, robot, machine, device, screen, monitor, metallic panel, console"
-        ),
-        "steps": 28,
-        "guidance": 6.5,
-        "stroke_rgb": (255, 255, 255),
-        "stroke_alpha": 255,
-        "stroke_px": 28,
-        "bleed": 2,
-        "lora_token": "cozyStickerV1Style",
-        # nature bias
-        "priority_positive": "terrain tile, vegetation, plants, crops",
-        "priority_negative": "machine, device, screen, monitor, robot, metallic, console, gauge, black and white, monochrome, grayscale, sky, clouds, sun, horizon, landscape, frame, border, panel",
-        "cutout": "auto",
-        "open_px": 1,
-        "close_px": 4,
-    },
     # Character/animal variant for cards that should be creatures (e.g., cow)
     "cozy_sticker_char_v1": {
         "prelude": (

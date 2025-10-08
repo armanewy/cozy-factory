@@ -44,12 +44,12 @@ Create/activate a venv and install:
 
 Style and determinism
 
-- Styles are defined in scripts/generate_card.py: cozy_sticker_v1 (default), cozy_sticker_nature_v1, cozy_sticker_char_v1. Each style bundles:
+- Styles are defined in scripts/generate_card.py: cozy_sticker_v1 (default) and cozy_sticker_char_v1. Each style bundles:
   - A positive “prelude” (style adjectives)
   - Priority negatives (e.g., “animal, face” for objects; “machine, screen” for nature)
   - SDXL params (steps, cfg)
   - Sticker outline parameters (stroke thickness/color and matte‑bleed)
-  - Default cutout mode: “rembg” segmentation for objects/characters; “auto” color‑key is available and can be chosen per card
+  - Default cutout mode: "rembg" segmentation ("auto" color-key is available and can be chosen per card)
 
 - Seeds are derived by scripts/seed_from_id.py from the card id. An optional config/seed_overrides.yaml lets you pin a specific integer for any id.
 
@@ -60,7 +60,7 @@ Core data model
   - name
   - tags: e.g., ["processing", "building"], ["farm", "resource"], ["animal"]
   - art_id: file stem in assets/art/cards/<art_id>.png
-  - style: optional override (cozy_sticker_v1 default; use nature/char variants when needed)
+  - style: optional override (cozy_sticker_v1 default; use char variant for animals/mascots)
   - art_subject: literal subject text (no style words)
   - negative: per‑card negatives to suppress undesired features
   - produces/consumes/cost: game data (not used by art pipeline)
@@ -93,11 +93,11 @@ Batch generation with QA + seed search (recommended)
   - For each card, generates N candidates with unique seeds derived from id
   - Scores with CLIP (subject similarity vs class‑specific negative prompts)
   - Picks the best candidate seed and renders the final image with metadata
-- Profiles (class‑aware negatives) are chosen per card by style and tags:
+- Profiles (class-aware negatives) are chosen per card by style and tags:
   - object: blocks faces/mascots and UI panels
-  - building: blocks appliance/screen clutter to keep “toy‑like” shapes
-  - nature: blocks machine/screen and any “pattern/wallpaper/landscape/sky” drift
+  - building: blocks appliance/screen clutter to keep "toy-like" shapes
   - character: for animals/mascots only (e.g., cow)
+  - note: vegetation/crops use the default style with per‑card negatives (ban sky/landscape/panel/pattern) instead of a separate nature style
 - Subset reruns: add --only id1,id2
 
 Reproducibility & metadata
@@ -130,7 +130,7 @@ Troubleshooting
 - UTF‑8 BOM errors on Windows: some editors save JSON with a BOM. If you see "Unexpected UTF‑8 BOM", resave the file as UTF‑8 (no BOM) or rewrite it from PowerShell using Set‑Content -Encoding UTF8.
 - Borders clipped: the generator pre‑pads, strokes, checks edges, and re‑strokes with extra pad if needed. If you still see clipping on a specific id, increase padding with --padding in generate_card.py or add a style override.
 - Object drift into “appliance” look: reinforce per‑card negatives in assets/meta/cards.json and rerun with --attempts 8+ via auto_generate_cards.py.
-- Nature drifting into “wallpaper/landscape”: the nature profile blocks these; ensure the card has style cozy_sticker_nature_v1 or tags that trigger that profile.
+- Vegetation drifting into "wallpaper/landscape": strengthen per‑card negatives in assets/meta/cards.json (e.g., "sky, clouds, horizon, landscape, frame, border, panel, wallpaper, tiled").
 
 Notes & status
 
@@ -145,4 +145,3 @@ Operational tips
 License & credits
 
 - This repository is for internal prototyping. Do not add third‑party assets without verifying their licenses. The SDXL model license applies when using its outputs. No additional license metadata is included in this repo.
-
