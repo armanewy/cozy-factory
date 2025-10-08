@@ -17,6 +17,7 @@ if str(ROOT) not in sys.path:
     sys.path.append(str(ROOT))
 
 from tools.art_post.stroke_and_bleed import apply_stroke_and_bleed
+from tools.art_post.enforce_rect_white import enforce as enforce_rect_white, _snap_border_whites
 
 # Silence noisy tokenizer warnings; we hard-trim to budget ourselves
 hf_logging.set_verbosity_error()
@@ -399,11 +400,17 @@ def run_generation(
         if output_path_override is not None
         else os.path.join("assets", "art", "cards", f"{cid}.png")
     )
+    # Enforce clean rectangular white border as final step (opaque RGB)
+    canvas, inner = enforce_rect_white(Path(final_pad_path), None, frame=52, tol=60, inset=12)
+    canvas = _snap_border_whites(canvas, inner, snap=12, tol=60)
     if add_frame:
+        # Optional subtle frame on top of the rectangular white border for previews
+        tmp_rect = os.path.join("temp", f"{cid}_rect.png")
+        canvas.save(tmp_rect)
         from frame_card import frame_card
-        frame_card(final_pad_path, final_path)
+        frame_card(tmp_rect, final_path)
     else:
-        os.replace(final_pad_path, final_path)
+        canvas.save(final_path)
 
     # Per-card meta
     card_meta = {
