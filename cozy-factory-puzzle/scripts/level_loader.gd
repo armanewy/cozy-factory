@@ -39,19 +39,23 @@ func _load_level(level_path: String) -> void:
 	_grid_rows = int(grid_conf.get("rows",8))
 	grid.configure(_grid_cols, _grid_rows)
 	io_bus.configure(_grid_cols, _grid_rows)
-	game_state.target = data.get("target", {})
+    game_state.target = data.get("target", {})
+    if data.has("constraints"):
+        game_state.set_constraints(data.get("constraints"))
 	# Spawn a minimal starter chain in the center
 	_spawn_demo_chain()
 
 func _spawn_demo_chain() -> void:
-	var cx: int = _grid_cols >> 1
-	var cy: int = _grid_rows >> 1
-	var c: Vector2i = Vector2i(cx - 2, cy)
-	_place_machine("res://scripts/machines/mill.gd", c)
-	_place_conveyor(c + Vector2i(1,0), Vector2i(1,0))
-	_place_machine("res://scripts/machines/mixer.gd", c + Vector2i(2,0))
-	_place_conveyor(c + Vector2i(3,0), Vector2i(1,0))
-	_place_machine("res://scripts/machines/oven.gd", c + Vector2i(4,0))
+    var cx: int = _grid_cols >> 1
+    var cy: int = _grid_rows >> 1
+    var c: Vector2i = Vector2i(cx - 3, cy)
+    _place_machine("res://scripts/machines/mill.gd", c)
+    _place_conveyor(c + Vector2i(1,0), Vector2i(1,0))
+    _place_machine("res://scripts/machines/mixer.gd", c + Vector2i(2,0))
+    _place_conveyor(c + Vector2i(3,0), Vector2i(1,0))
+    _place_machine("res://scripts/machines/oven.gd", c + Vector2i(4,0))
+    _place_conveyor(c + Vector2i(5,0), Vector2i(1,0))
+    _place_machine("res://scripts/machines/seller.gd", c + Vector2i(6,0))
 
 func _place_machine(script_path: String, cell: Vector2i) -> void:
 	var s: Node2D = load("res://scenes/Building.tscn").instantiate() as Node2D

@@ -85,5 +85,8 @@ func remove(node: Node2D) -> void:
         if occupied[k] == node:
             occupied.erase(k)
 
+func get_at(cell: Vector2i) -> Node2D:
+    return occupied.get(_k(cell), null)
+
 func _k(c: Vector2i) -> String:
     return str(c.x, ",", c.y)
