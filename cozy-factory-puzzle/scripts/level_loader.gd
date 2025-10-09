@@ -7,6 +7,7 @@ var io_bus: Node = null
 var game_state: Node = null
 var _grid_cols: int = 12
 var _grid_rows: int = 8
+var _current_level: Node = null
 
 func _ready() -> void:
 	# Load first level by default
@@ -18,12 +19,23 @@ func _ensure_level_loaded(level_path: String) -> void:
 	# Avoid adding children while the parent is still initializing
 	get_parent().add_child.call_deferred(level)
 	await get_tree().process_frame
+	_current_level = level
 	grid = level.get_node("Grid")
 	io_bus = level.get_node("IoBus")
 	game_state = level.get_node("GameState")
 	if grid.has_method("set_io_bus"):
 		grid.call("set_io_bus", io_bus)
 	_load_level(level_path)
+
+func load_level_path(level_path: String) -> void:
+	if _current_level:
+		_current_level.queue_free()
+		await get_tree().process_frame
+	_ensure_level_loaded(level_path)
+
+func reload_current() -> void:
+	# For now, reload level_001; can track path later
+	load_level_path("res://content/levels/level_001.json")
 
 func _load_level(level_path: String) -> void:
 	var f := FileAccess.open(level_path, FileAccess.READ)
