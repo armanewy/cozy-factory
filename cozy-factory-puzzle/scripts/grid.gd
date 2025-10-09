@@ -9,6 +9,9 @@ func configure(cols_in: int, rows_in: int) -> void:
     cols = cols_in
     rows = rows_in
 
+func get_size() -> Vector2i:
+    return Vector2i(cols, rows)
+
 func to_cell(world_pos: Vector2) -> Vector2i:
     var local := to_local(world_pos)
     return Vector2i(floor(local.x / cell_size), floor(local.y / cell_size))
@@ -47,4 +50,3 @@ func remove(node: Node2D) -> void:
 
 func _k(c: Vector2i) -> String:
     return str(c.x, ",", c.y)
-

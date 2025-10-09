@@ -14,10 +14,9 @@ func set_refs(grid_in: Node, io_in: Node) -> void:
 func tick(dt_ms: int) -> void:
     if io_bus == null or grid == null:
         return
-    var cell := grid.to_cell(global_position)
+    var cell: Vector2i = grid.to_cell(global_position)
     io_bus.advance_items(cell, direction, dt_ms, belt_speed)
 
 func rotate_dir() -> void:
     # Right -> Down -> Left -> Up
     direction = Vector2i(-direction.y, direction.x)
-

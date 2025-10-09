@@ -5,6 +5,8 @@ extends Node
 var grid: Node2D = null
 var io_bus: Node = null
 var game_state: Node = null
+var _grid_cols: int = 12
+var _grid_rows: int = 8
 
 func _ready() -> void:
     # Load first level by default
@@ -29,16 +31,16 @@ func _load_level(level_path: String) -> void:
         push_error("Invalid level JSON")
         return
     var grid_conf = data.get("grid", {"cols":12, "rows":8})
-    grid.configure(int(grid_conf.get("cols",12)), int(grid_conf.get("rows",8)))
-    io_bus.configure(int(grid_conf.get("cols",12)), int(grid_conf.get("rows",8)))
+    _grid_cols = int(grid_conf.get("cols",12))
+    _grid_rows = int(grid_conf.get("rows",8))
+    grid.configure(_grid_cols, _grid_rows)
+    io_bus.configure(_grid_cols, _grid_rows)
     game_state.target = data.get("target", {})
     # Spawn a minimal starter chain in the center
     _spawn_demo_chain()
 
 func _spawn_demo_chain() -> void:
-    var cols := grid.cols
-    var rows := grid.rows
-    var c := Vector2i(cols/2-2, rows/2)
+    var c: Vector2i = Vector2i(_grid_cols/2-2, _grid_rows/2)
     _place_machine("res://scripts/machines/mill.gd", c)
     _place_conveyor(c + Vector2i(1,0), Vector2i(1,0))
     _place_machine("res://scripts/machines/mixer.gd", c + Vector2i(2,0))
@@ -46,20 +48,21 @@ func _spawn_demo_chain() -> void:
     _place_machine("res://scripts/machines/oven.gd", c + Vector2i(4,0))
 
 func _place_machine(script_path: String, cell: Vector2i) -> void:
-    var s := load("res://scenes/Building.tscn").instantiate()
+    var s: Node2D = load("res://scenes/Building.tscn").instantiate() as Node2D
     s.set_script(load(script_path))
     add_child(s)
     if s is Node2D:
         s.position = grid.to_world(cell)
-    if "set_refs" in s:
+    if s.has_method("set_refs"):
         s.set_refs(grid, io_bus)
     grid.place(s, cell, s.footprint.x, s.footprint.y)
 
 func _place_conveyor(cell: Vector2i, dir: Vector2i) -> void:
-    var c := load("res://scenes/Conveyor.tscn").instantiate()
+    var c: Node2D = load("res://scenes/Conveyor.tscn").instantiate() as Node2D
     add_child(c)
     c.position = grid.to_world(cell)
-    c.direction = dir
-    c.set_refs(grid, io_bus)
+    if c.has_variable("direction"):
+        c.direction = dir
+    if c.has_method("set_refs"):
+        c.set_refs(grid, io_bus)
     grid.place(c, cell, 1, 1)
-
