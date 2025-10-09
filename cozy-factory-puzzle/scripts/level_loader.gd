@@ -51,18 +51,17 @@ func _place_machine(script_path: String, cell: Vector2i) -> void:
     var s: Node2D = load("res://scenes/Building.tscn").instantiate() as Node2D
     s.set_script(load(script_path))
     add_child(s)
-    if s is Node2D:
-        s.position = grid.to_world(cell)
+    s.position = grid.to_world(cell)
     if s.has_method("set_refs"):
-        s.set_refs(grid, io_bus)
-    grid.place(s, cell, s.footprint.x, s.footprint.y)
+        s.call("set_refs", grid, io_bus)
+    var fp: Vector2i = s.get("footprint")
+    grid.place(s, cell, fp.x, fp.y)
 
 func _place_conveyor(cell: Vector2i, dir: Vector2i) -> void:
     var c: Node2D = load("res://scenes/Conveyor.tscn").instantiate() as Node2D
     add_child(c)
     c.position = grid.to_world(cell)
-    if c.has_variable("direction"):
-        c.direction = dir
+    c.set("direction", dir)
     if c.has_method("set_refs"):
-        c.set_refs(grid, io_bus)
+        c.call("set_refs", grid, io_bus)
     grid.place(c, cell, 1, 1)
