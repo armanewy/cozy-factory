@@ -7,8 +7,12 @@ var game_state: Node = null
 func set_game_state(gs: Node) -> void:
     game_state = gs
 
-func tick(dt_ms: int) -> void:
+func tick(_dt_ms: int) -> void:
     # Try to consume as many accepted items as available this tick (bounded)
+    if grid == null or io_bus == null:
+        return
+    if not is_inside_tree() or not is_instance_valid(grid) or not is_instance_valid(io_bus):
+        return
     var cell := _cell()
     var consumed := 0
     for attempt in range(8):
