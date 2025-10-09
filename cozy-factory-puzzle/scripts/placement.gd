@@ -27,7 +27,14 @@ func _unhandled_input(event: InputEvent) -> void:
             KEY_5: current = "seller"
             KEY_0: current = "erase"
             KEY_R:
-                dir = Vector2i(-dir.y, dir.x)
+                # Try to rotate the conveyor under the cursor; otherwise rotate placement dir
+                var mp: Vector2 = get_viewport().get_mouse_position()
+                var cell: Vector2i = grid.to_cell(mp)
+                var node: Node2D = grid.get_at(cell)
+                if node and node.has_method("rotate_dir"):
+                    node.call("rotate_dir")
+                else:
+                    dir = Vector2i(-dir.y, dir.x)
                 get_viewport().set_input_as_handled()
                 return
     if event is InputEventMouseButton and event.pressed and event.button_index in [MOUSE_BUTTON_LEFT, MOUSE_BUTTON_RIGHT]:

@@ -28,10 +28,15 @@ func _ensure_level_loaded(level_path: String) -> void:
 	_load_level(level_path)
 
 func load_level_path(level_path: String) -> void:
+	var sc := get_parent().get_node("SimClock")
+	if sc:
+		sc.call("pause_clock")
 	if _current_level:
 		_current_level.queue_free()
 		await get_tree().process_frame
 	_ensure_level_loaded(level_path)
+	if sc:
+		sc.call("start")
 
 func reload_current() -> void:
 	# For now, reload level_001; can track path later
