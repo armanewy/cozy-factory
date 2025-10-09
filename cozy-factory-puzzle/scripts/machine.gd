@@ -23,6 +23,7 @@ func tick(dt_ms: int) -> void:
     if _accum >= cycle_ms:
         if _process_cycle():
             _accum = 0
+    queue_redraw()
 
 func _cell() -> Vector2i:
     if grid and "to_cell" in grid:
@@ -42,3 +43,14 @@ func _process_cycle() -> bool:
             return true
     return false
 
+func _draw() -> void:
+    var col := Color(0.85, 0.9, 1.0)
+    if id == "mill":
+        col = Color(0.80, 0.93, 0.82)
+    elif id == "mixer":
+        col = Color(0.85, 0.85, 0.98)
+    elif id == "oven":
+        col = Color(0.98, 0.88, 0.78)
+    var size := Vector2(48, 48)
+    draw_rect(Rect2(-size*0.5, size), col)
+    draw_rect(Rect2(-size*0.5, size), Color(0.2,0.2,0.2), false, 2.0)

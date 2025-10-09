@@ -18,10 +18,12 @@ func _ensure_level_loaded(level_path: String) -> void:
 	# Avoid adding children while the parent is still initializing
 	get_parent().add_child.call_deferred(level)
 	await get_tree().process_frame
-	grid = level.get_node("Grid")
-	io_bus = level.get_node("IoBus")
-	game_state = level.get_node("GameState")
-	_load_level(level_path)
+    grid = level.get_node("Grid")
+    io_bus = level.get_node("IoBus")
+    game_state = level.get_node("GameState")
+    if grid.has_method("set_io_bus"):
+        grid.call("set_io_bus", io_bus)
+    _load_level(level_path)
 
 func _load_level(level_path: String) -> void:
 	var f := FileAccess.open(level_path, FileAccess.READ)

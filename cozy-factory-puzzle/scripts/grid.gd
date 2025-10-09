@@ -4,6 +4,7 @@ extends Node2D
 var cols := 12
 var rows := 8
 var occupied := {} # key -> Node2D
+var io_bus: Node = null
 
 func configure(cols_in: int, rows_in: int) -> void:
     cols = cols_in
@@ -11,6 +12,42 @@ func configure(cols_in: int, rows_in: int) -> void:
 
 func get_size() -> Vector2i:
     return Vector2i(cols, rows)
+
+func set_io_bus(io: Node) -> void:
+    io_bus = io
+    set_process(true)
+    queue_redraw()
+
+func _process(_delta: float) -> void:
+    queue_redraw()
+
+func _draw() -> void:
+    # Grid lines
+    var cs := float(cell_size)
+    var col_grid := Color(0.8,0.8,0.85,1.0)
+    for x in range(cols+1):
+        draw_line(Vector2(x*cs, 0), Vector2(x*cs, rows*cs), col_grid, 1.0)
+    for y in range(rows+1):
+        draw_line(Vector2(0, y*cs), Vector2(cols*cs, y*cs), col_grid, 1.0)
+    # Items debug: small circles moving along direction
+    if io_bus and io_bus.has_method("get_items") and io_bus.has_method("in_bounds"):
+        var tiles: Dictionary = io_bus.tiles if "tiles" in io_bus else {}
+        for k in tiles.keys():
+            var parts := str(k).split(",")
+            if parts.size() != 2:
+                continue
+            var cx := int(parts[0])
+            var cy := int(parts[1])
+            var cell_origin := Vector2(cx*cs, cy*cs)
+            var arr: Array = tiles[k]
+            for it in arr:
+                if typeof(it) != TYPE_DICTIONARY:
+                    continue
+                var prog := float(it.get("progress", 0.0))
+                var dirv: Vector2i = it.get("dir", Vector2i.ZERO)
+                var dirf := Vector2(dirv.x, dirv.y)
+                var pos := cell_origin + Vector2(cs*0.5, cs*0.5) + dirf * (prog-0.5) * cs * 0.8
+                draw_circle(pos, 6.0, Color(0.2,0.2,0.2,1.0))
 
 func to_cell(world_pos: Vector2) -> Vector2i:
     var local := to_local(world_pos)
