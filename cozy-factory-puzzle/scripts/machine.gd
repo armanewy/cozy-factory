@@ -19,20 +19,20 @@ func set_refs(grid_in: Node, io_in: Node) -> void:
 	io_bus = io_in
 
 func tick(dt_ms: int) -> void:
-    if grid == null or io_bus == null:
-        return
-    if not is_instance_valid(grid) or not is_inside_tree():
-        return
-    _accum += dt_ms
+	if grid == null or io_bus == null:
+		return
+	if not is_instance_valid(grid) or not is_inside_tree():
+		return
+	_accum += dt_ms
 	if _accum >= cycle_ms:
 		if _process_cycle():
 			_accum = 0
 	queue_redraw()
 
 func _cell() -> Vector2i:
-    if grid != null and is_instance_valid(grid) and "to_cell" in grid:
-        return grid.to_cell(global_position)
-    return Vector2i.ZERO
+	if grid != null and is_instance_valid(grid) and "to_cell" in grid:
+		return grid.to_cell(global_position)
+	return Vector2i.ZERO
 
 func _process_cycle() -> bool:
 	# Default cycle: consume inputs -> produce one of each output
