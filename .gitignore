@@ -18,3 +18,8 @@ outputs/
 *.egg-info/
 
 comfy/models/
+
+# Godot 4 cache
+.godot/
+**/.godot/
+
