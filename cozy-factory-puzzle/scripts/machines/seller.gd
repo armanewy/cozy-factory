@@ -23,5 +23,8 @@ func _draw() -> void:
     var size := Vector2(42, 42)
     draw_rect(Rect2(-size*0.5, size), Color(1.0,0.95,0.85))
     draw_rect(Rect2(-size*0.5, size), Color(0.2,0.2,0.2), false, 2.0)
-    draw_string(get_tree().root.get_theme_default_font(), Vector2(-10,5), "$", HAlign.LEFT, -1, 12)
-
+    # Simple dollar sign glyph via lines (no font dependency)
+    var c := Color(0.2,0.2,0.2)
+    draw_line(Vector2(0,-10), Vector2(0,10), c, 2.0)
+    draw_arc(Vector2(0,-3), 8.0, 0.8, 2.4, 12, c, 2.0)
+    draw_arc(Vector2(0, 3), 8.0, -2.4, -0.8, 12, c, 2.0)

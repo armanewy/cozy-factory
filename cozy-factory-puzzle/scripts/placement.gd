@@ -42,23 +42,23 @@ func _unhandled_input(event: InputEvent) -> void:
         _try_place(cell)
 
 func _refund(n: Node2D) -> void:
-    var id := n.get("id") if "id" in n else (n.get_class())
-    var def := BuildCatalog.get_def(str(id))
-    if def and game_state:
+    var id_val: String = str(n.get("build_id"))
+    var def: Dictionary = BuildCatalog.get_def(id_val)
+    if def.size() > 0 and game_state:
         game_state.on_removed(def)
 
 func _try_place(cell: Vector2i) -> void:
-    var def := BuildCatalog.get_def(current)
+    var def: Dictionary = BuildCatalog.get_def(current)
     if def.size() == 0:
         return
     if not game_state.can_place(def):
         return
-    var w := int(def.get("footprint", Vector2i.ONE).x)
-    var h := int(def.get("footprint", Vector2i.ONE).y)
-    var place_dir := dir
+    var w: int = int(def.get("footprint", Vector2i.ONE).x)
+    var h: int = int(def.get("footprint", Vector2i.ONE).y)
+    var place_dir: Vector2i = dir
     # rotate non-square machines when facing vertical
     if def.get("type") == "machine" and w != h and (dir.y != 0):
-        var tmp = w; w = h; h = tmp
+        var tmp: int = w; w = h; h = tmp
     if not grid.free_for(cell, w, h):
         return
     var node: Node2D
@@ -73,7 +73,7 @@ func _try_place(cell: Vector2i) -> void:
         node.call("set_refs", grid, io_bus)
         if node.has_method("set_game_state"):
             node.call("set_game_state", game_state)
+    node.set("build_id", current)
     if grid.place(node, cell, w, h):
         get_parent().add_child(node)
         game_state.on_placed(def)
-
