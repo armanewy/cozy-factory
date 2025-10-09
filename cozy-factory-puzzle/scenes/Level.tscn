@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/grid.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/io_bus.gd" id="2"]
+[ext_resource type="Script" path="res://scripts/game_state.gd" id="3"]
+
+[node name="Level" type="Node2D"]
+
+[node name="Grid" type="Node2D" parent="."]
+script = ExtResource("1")
+cell_size = 64
+
+[node name="IoBus" type="Node" parent="."]
+script = ExtResource("2")
+
+[node name="GameState" type="Node" parent="."]
+script = ExtResource("3")
+

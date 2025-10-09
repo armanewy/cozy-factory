@@ -1,0 +1,14 @@
+[gd_resource type="ConfigFile" load_steps=2 format=3]
+
+[resource]
+config_version=5
+
+[application]
+config/name="Cozy Factory Puzzle"
+run/main_scene="res://scenes/Main.tscn"
+config/features=PackedStringArray("4.0")
+config/icon="res://icon.svg"
+
+[rendering]
+environment/defaults/default_clear_color=Color(0.95, 0.95, 0.95, 1)
+

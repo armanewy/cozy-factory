@@ -1,0 +1,11 @@
+{
+  "id": "level_001",
+  "name": "Warm Croissants",
+  "seed": 123456,
+  "grid": { "cols": 12, "rows": 8 },
+  "available_machines": ["mill","mixer","oven","belt"],
+  "constraints": { "budget": 1200, "power_watts": 800, "max_tiles": 60 },
+  "target": { "croissant": 12 },
+  "hints": ["Flour first, heat later."]
+}
+

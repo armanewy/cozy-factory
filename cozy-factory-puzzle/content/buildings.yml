@@ -1,0 +1,5 @@
+mill:   { footprint: [1,1], cycle_ms: 800,  power_watts: 50,  inputs: [],         outputs: ["flour"],    cost: 100 }
+mixer:  { footprint: [1,1], cycle_ms: 1200, power_watts: 80,  inputs: ["flour"],  outputs: ["dough"],    cost: 150 }
+oven:   { footprint: [2,1], cycle_ms: 1500, power_watts: 200, inputs: ["dough"], outputs: ["croissant"], cost: 250 }
+belt:   { footprint: [1,1], belt_speed: 1.0, cost: 50, special: "transport" }
+

@@ -1,0 +1,11 @@
+{
+  "id": "level_002",
+  "name": "Double Mix",
+  "seed": 999,
+  "grid": { "cols": 14, "rows": 8 },
+  "available_machines": ["mill","mixer","oven","belt"],
+  "constraints": { "budget": 1500, "power_watts": 1000, "max_tiles": 80 },
+  "target": { "croissant": 24 },
+  "hints": ["Two mixers never hurt."]
+}
+

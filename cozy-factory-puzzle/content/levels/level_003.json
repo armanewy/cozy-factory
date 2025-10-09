@@ -1,0 +1,11 @@
+{
+  "id": "level_003",
+  "name": "Tight Budget",
+  "seed": 42,
+  "grid": { "cols": 10, "rows": 8 },
+  "available_machines": ["mill","mixer","oven","belt"],
+  "constraints": { "budget": 900, "power_watts": 600, "max_tiles": 50 },
+  "target": { "croissant": 10 },
+  "hints": ["Route efficiently."]
+}
+
