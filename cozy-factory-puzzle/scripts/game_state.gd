@@ -20,5 +20,4 @@ func _check_win() -> void:
     for k in target.keys():
         if int(produced.get(k, 0)) < int(target[k]):
             return
-    emit_signal("level_passed")
-
+    level_passed.emit()

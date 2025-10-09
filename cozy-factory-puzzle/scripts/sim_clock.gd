@@ -22,8 +22,7 @@ func _process(delta: float) -> void:
     _accum += delta * 1000.0
     while _accum >= tick_ms:
         _accum -= tick_ms
-        emit_signal("tick", tick_ms)
+        tick.emit(tick_ms)
         for n in get_tree().get_nodes_in_group("tickables"):
             if "tick" in n:
                 n.tick(tick_ms)
-

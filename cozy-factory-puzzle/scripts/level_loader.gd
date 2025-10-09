@@ -40,7 +40,9 @@ func _load_level(level_path: String) -> void:
     _spawn_demo_chain()
 
 func _spawn_demo_chain() -> void:
-    var c: Vector2i = Vector2i(_grid_cols/2-2, _grid_rows/2)
+    var cx: int = _grid_cols >> 1
+    var cy: int = _grid_rows >> 1
+    var c: Vector2i = Vector2i(cx - 2, cy)
     _place_machine("res://scripts/machines/mill.gd", c)
     _place_conveyor(c + Vector2i(1,0), Vector2i(1,0))
     _place_machine("res://scripts/machines/mixer.gd", c + Vector2i(2,0))
