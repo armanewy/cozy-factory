@@ -84,16 +84,16 @@ func _texture_for_id() -> Texture2D:
 		"oven": path = "res://assets/cards/oven.png"
 		"seller": path = "res://assets/cards/market.png"
 		_: path = ""
-    if path != "" and ResourceLoader.exists(path):
-        return load(path)
-    return null
+	if path != "" and ResourceLoader.exists(path):
+		return load(path)
+	return null
 
 func _fit_sprite() -> void:
-    if _sprite == null or _sprite.texture == null or grid == null: return
-    var sz: Vector2i = footprint
-    var target_w: float = float(grid.cell_size) * float(sz.x)
-    var target_h: float = float(grid.cell_size) * float(sz.y)
-    var tw: float = float(_sprite.texture.get_width())
-    var th: float = float(_sprite.texture.get_height())
-    var s: float = min(target_w / tw, target_h / th) * 0.9
-    _sprite.scale = Vector2(s, s)
+	if _sprite == null or _sprite.texture == null or grid == null: return
+	var sz: Vector2i = footprint
+	var target_w: float = float(grid.cell_size) * float(sz.x)
+	var target_h: float = float(grid.cell_size) * float(sz.y)
+	var tw: float = float(_sprite.texture.get_width())
+	var th: float = float(_sprite.texture.get_height())
+	var s: float = min(target_w / tw, target_h / th) * 0.9
+	_sprite.scale = Vector2(s, s)
