@@ -91,6 +91,9 @@ func place(node: Node2D, cell: Vector2i, w: int, h: int) -> bool:
         return false
     for c in rect_footprint(cell, w, h):
         occupied[_k(c)] = node
+    # Remember origin cell and footprint on the node for robust repositioning
+    node.set("grid_cell", cell)
+    node.set("grid_size", Vector2i(w, h))
     node.position = to_world(cell)
     node.add_to_group("tickables")
     return true
@@ -116,8 +119,12 @@ func _reposition_all() -> void:
         if seen.has(node):
             continue
         seen[node] = true
-        var parts := str(k).split(",")
-        if parts.size() != 2:
-            continue
-        var cell := Vector2i(int(parts[0]), int(parts[1]))
+        var cell: Vector2i
+        if "grid_cell" in node:
+            cell = node.get("grid_cell")
+        else:
+            var parts := str(k).split(",")
+            if parts.size() != 2:
+                continue
+            cell = Vector2i(int(parts[0]), int(parts[1]))
         node.position = to_world(cell)
