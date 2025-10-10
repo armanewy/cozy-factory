@@ -90,8 +90,9 @@ func _try_place(cell: Vector2i) -> void:
 		if node.has_method("_add_sprite"):
 			node.call("_add_sprite")
 	node.set("build_id", current)
+	# Parent under Grid so it follows grid transform
+	grid.add_child(node)
 	if grid.place(node, cell, w, h):
-		get_parent().add_child(node)
 		game_state.on_placed(def)
 
 func _create_ghost() -> void:
@@ -101,7 +102,7 @@ func _create_ghost() -> void:
 	ghost_sprite.centered = true
 	ghost_sprite.scale = Vector2(0.07, 0.07)
 	ghost.add_child(ghost_sprite)
-	add_child(ghost)
+	grid.add_child(ghost)
 
 func _update_ghost() -> void:
 	if current == "erase":
@@ -110,7 +111,10 @@ func _update_ghost() -> void:
 	ghost.visible = true
 	var mp: Vector2 = get_viewport().get_mouse_position()
 	var cell: Vector2i = grid.to_cell(mp)
-	ghost.position = grid.to_world(cell)
+	if grid.has_method("rect_center_local"):
+		ghost.position = grid.rect_center_local(cell, Vector2i(1,1))
+	else:
+		ghost.position = grid.to_world(cell)
 	var def: Dictionary = BuildCatalog.get_def(current)
 	var w: int = int(def.get("footprint", Vector2i.ONE).x)
 	var h: int = int(def.get("footprint", Vector2i.ONE).y)

@@ -69,12 +69,17 @@ func to_cell(world_pos: Vector2) -> Vector2i:
     return Vector2i(floor(local.x / cell_size), floor(local.y / cell_size))
 
 func to_world(cell: Vector2i) -> Vector2:
-    return to_global(Vector2((float(cell.x) + 0.5) * float(cell_size), (float(cell.y) + 0.5) * float(cell_size)))
+    # World center of a 1x1 cell
+    return to_global(rect_center_local(cell, Vector2i(1,1)))
 
-func rect_center_world(cell: Vector2i, size: Vector2i) -> Vector2:
+func rect_center_local(cell: Vector2i, size: Vector2i) -> Vector2:
+    # Grid-local center of a rect footprint
     var cx: float = (float(cell.x) + float(size.x) * 0.5) * float(cell_size)
     var cy: float = (float(cell.y) + float(size.y) * 0.5) * float(cell_size)
-    return to_global(Vector2(cx, cy))
+    return Vector2(cx, cy)
+
+func rect_center_world(cell: Vector2i, size: Vector2i) -> Vector2:
+    return to_global(rect_center_local(cell, size))
 
 func rect_footprint(cell: Vector2i, w: int, h: int) -> Array[Vector2i]:
     var arr: Array[Vector2i] = []
@@ -99,7 +104,8 @@ func place(node: Node2D, cell: Vector2i, w: int, h: int) -> bool:
     # Remember origin cell and footprint on the node for robust repositioning
     node.set("grid_cell", cell)
     node.set("grid_size", Vector2i(w, h))
-    node.position = rect_center_world(cell, Vector2i(w, h))
+    # Expect node to be a child of Grid so position is grid-local
+    node.position = rect_center_local(cell, Vector2i(w, h))
     node.add_to_group("tickables")
     return true
 
@@ -135,4 +141,4 @@ func _reposition_all() -> void:
         var size: Vector2i = Vector2i(1,1)
         if "grid_size" in node:
             size = node.get("grid_size")
-        node.position = rect_center_world(cell, size)
+        node.position = rect_center_local(cell, size)
