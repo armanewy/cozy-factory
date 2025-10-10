@@ -69,7 +69,12 @@ func to_cell(world_pos: Vector2) -> Vector2i:
     return Vector2i(floor(local.x / cell_size), floor(local.y / cell_size))
 
 func to_world(cell: Vector2i) -> Vector2:
-    return to_global(Vector2((cell.x + 0.5) * cell_size, (cell.y + 0.5) * cell_size))
+    return to_global(Vector2((float(cell.x) + 0.5) * float(cell_size), (float(cell.y) + 0.5) * float(cell_size)))
+
+func rect_center_world(cell: Vector2i, size: Vector2i) -> Vector2:
+    var cx: float = (float(cell.x) + float(size.x) * 0.5) * float(cell_size)
+    var cy: float = (float(cell.y) + float(size.y) * 0.5) * float(cell_size)
+    return to_global(Vector2(cx, cy))
 
 func rect_footprint(cell: Vector2i, w: int, h: int) -> Array[Vector2i]:
     var arr: Array[Vector2i] = []
@@ -94,7 +99,7 @@ func place(node: Node2D, cell: Vector2i, w: int, h: int) -> bool:
     # Remember origin cell and footprint on the node for robust repositioning
     node.set("grid_cell", cell)
     node.set("grid_size", Vector2i(w, h))
-    node.position = to_world(cell)
+    node.position = rect_center_world(cell, Vector2i(w, h))
     node.add_to_group("tickables")
     return true
 
@@ -127,4 +132,7 @@ func _reposition_all() -> void:
             if parts.size() != 2:
                 continue
             cell = Vector2i(int(parts[0]), int(parts[1]))
-        node.position = to_world(cell)
+        var size: Vector2i = Vector2i(1,1)
+        if "grid_size" in node:
+            size = node.get("grid_size")
+        node.position = rect_center_world(cell, size)
