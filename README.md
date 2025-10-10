@@ -11,14 +11,17 @@ Repository layout
   - assets/meta/build_manifest.json: manifest aggregated during generation
 
 - Generation scripts
-  - scripts/generate_card.py: single‑card generator (Diffusers SDXL)
+  - scripts/generate_card.py: single-card generator (Diffusers SDXL)
   - scripts/generate_all_cards.py: batch generator over assets/meta/cards.json
-  - scripts/auto_generate_cards.py: batch generator with CLIP‑based QA & seed search
-  - scripts/frame_card.py, scripts/pad_square.py: post‑processing helpers
-  - scripts/seed_from_id.py: stable 32‑bit seeds derived from ids (with overrides)
+  - scripts/auto_generate_cards.py: batch generator with CLIP-based QA & seed search
+  - scripts/frame_card.py, scripts/pad_square.py: post-processing helpers
+  - scripts/seed_from_id.py: stable 32-bit seeds derived from ids (with overrides)
+  - tools/art_post/enforce_rect_white.py: enforce an opaque rectangular white frame on PNGs
+  - tools/art_post/batch_enforce_rect.py: batch runner for the above
 
-- Art post‑processing
-  - tools/art_post/stroke_and_bleed.py: applies matte‑bleed and white outline
+- Art post-processing
+  - tools/art_post/stroke_and_bleed.py: applies matte-bleed and white outline
+  - tools/art_post/enforce_rect_white.py: final rectangular white frame (opaque RGB) used by the game
 
 - ComfyUI workflows
   - comfy/workflows/cozy_sticker_v1.json: SDXL base node graph that mirrors the defaults used by the Python scripts
@@ -27,6 +30,36 @@ Repository layout
 - Docs
   - docs/ART_BIBLE.md: style guide (prompt template, palette, outline, output specs)
   - docs/LoRA_TRAINING.md: recipe for training/using a style LoRA (optional)
+  - cozy-factory-puzzle/README.md: Godot playable core (Phase 2) architecture & usage
+
+Playable core (Godot)
+---------------------
+`cozy-factory-puzzle/` contains a Godot 4 project that implements the deterministic, fixed‑tick playable core used to test the art and game loop.
+
+Open/run
+- Open `cozy-factory-puzzle/project.godot` in Godot 4.3+ and press Play.
+- The grid auto‑fits the window and recenters on resize.
+
+Controls
+- Build: `1` Mill, `2` Mixer, `3` Oven, `4` Belt, `5` Seller, `0` Erase
+- Rotate: `R` (rotates conveyor under the cursor; otherwise rotates placement direction)
+- Place/Remove: Left/Right click
+- Sim: Space toggles Play/Pause; Reset reloads; Level 1/2/3 buttons switch levels.
+
+Core systems
+- Fixed tick: `SimClock` emits 100 ms ticks and calls `tick(dt_ms)` on nodes in group `tickables` only.
+- IoBus routing: per‑cell arrays of `{ kind, dir, progress }`; belts advance deterministically; items move when `progress >= 1`.
+- Grid & placement: grid validates footprints, tracks occupancy; nodes are children of `Grid` and store `grid_cell` + `grid_size` so they stay locked to cells through window resizes. Ghost preview shows validity.
+- Sprites & scaling: machine/belt sprites come from `cozy-factory-puzzle/assets/cards/*.png` and scale to the current cell size with linear filtering for crisp visuals.
+- Game state & win: constraints (budget, power) are enforced at placement and shown in the HUD; a `Seller` consumes outputs and triggers win when `target` is satisfied.
+
+Project structure (Godot)
+- Scenes: `Main.tscn` (SimClock, LevelLoader, UI), `Level.tscn` (Grid, IoBus, GameState, Placement)
+- Scripts: `scripts/` (sim_clock.gd, io_bus.gd, grid.gd, machine.gd, conveyor.gd, game_state.gd, placement.gd, level_loader.gd) and `scripts/machines/*` (mill, mixer, oven, seller)
+- Content: `cozy-factory-puzzle/content/levels/*.json` define grid size, constraints and targets; `content/buildings.yml` documents footprints and cycles.
+
+GDScript conventions
+- Strict mode, tabs only (no mixed spaces), and explicit types where inference would yield `Variant`.
 
 Environment & setup
 
@@ -115,6 +148,8 @@ Post‑processing (sticker look)
   - alpha_bleed: fills transparent pixels with a blurred matte to avoid edge halos in atlases
   - outer_stroke + matte: white outline + subtle stroke color (configurable per style)
   - The generator pre‑pads the image before stroking, and adds a final pad after; it also retries with extra padding if the stroked alpha touches the canvas edges.
+- tools/art_post/enforce_rect_white.py:
+  - Flattens art onto white, crops to the non‑white bbox and renders onto a fixed rectangular white frame (opaque RGB). This guarantees clean edges and avoids alpha artifacts in‑engine.
 
 ComfyUI parity
 
@@ -128,13 +163,13 @@ Troubleshooting
 
 - Tokenizer warnings (77‑token budget): scripts/generate_card.py trims both positive/negative prompts to fit both SDXL text encoders.
 - UTF‑8 BOM errors on Windows: some editors save JSON with a BOM. If you see "Unexpected UTF‑8 BOM", resave the file as UTF‑8 (no BOM) or rewrite it from PowerShell using Set‑Content -Encoding UTF8.
-- Borders clipped: the generator pre‑pads, strokes, checks edges, and re‑strokes with extra pad if needed. If you still see clipping on a specific id, increase padding with --padding in generate_card.py or add a style override.
+- Borders clipped: the generator pre‑pads, strokes, checks edges, and re‑strokes with extra pad if needed. The rectangular frame step then ensures no visual clipping in the game build.
 - Object drift into “appliance” look: reinforce per‑card negatives in assets/meta/cards.json and rerun with --attempts 8+ via auto_generate_cards.py.
 - Vegetation drifting into "wallpaper/landscape": strengthen per‑card negatives in assets/meta/cards.json (e.g., "sky, clouds, horizon, landscape, frame, border, panel, wallpaper, tiled").
 
 Notes & status
 
-- The Wheat Field card has been a deliberate hotspot. If you need to regenerate it, prefer running scripts/auto_generate_cards.py with --only wheat_field_001 and a higher --attempts to find a clean seed. If an SDXL render still produces interior artifacts, consider a manual PNG edit or an inpaint pass in ComfyUI; the pipeline will preserve the sticker outline and padding.
+- The Wheat Field card has historically required extra care. Prefer batch QA (`auto_generate_cards.py --only wheat_field_001 --attempts 8+`) to find a clean seed; the rectangular frame step keeps borders robust in‑engine.
 
 Operational tips
 
