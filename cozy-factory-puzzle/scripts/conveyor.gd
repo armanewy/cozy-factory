@@ -65,7 +65,7 @@ func _fit_sprite() -> void:
     var target_h := float(grid.cell_size)
     var tw := float(_sprite.texture.get_width())
     var th := float(_sprite.texture.get_height())
-    var s := min(target_w / tw, target_h / th) * 0.9
+    var s: float = min(target_w / tw, target_h / th) * 0.9
     _sprite.scale = Vector2(s, s)
 
 func _on_grid_cell_size_changed(_cs: int) -> void:

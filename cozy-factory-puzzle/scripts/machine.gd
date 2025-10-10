@@ -65,16 +65,16 @@ func _ready() -> void:
 	_add_sprite()
 
 func _add_sprite() -> void:
-    if _sprite != null: return
-    var tex := _texture_for_id()
-    if tex == null: return
-    _sprite = Sprite2D.new()
-    _sprite.name = "Sprite"
-    _sprite.texture = tex
-    _sprite.centered = true
-    _sprite.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
-    add_child(_sprite)
-    _fit_sprite()
+	if _sprite != null: return
+	var tex := _texture_for_id()
+	if tex == null: return
+	_sprite = Sprite2D.new()
+	_sprite.name = "Sprite"
+	_sprite.texture = tex
+	_sprite.centered = true
+	_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+	add_child(_sprite)
+	_fit_sprite()
 
 func _texture_for_id() -> Texture2D:
 	var path := ""
@@ -91,9 +91,9 @@ func _texture_for_id() -> Texture2D:
 func _fit_sprite() -> void:
     if _sprite == null or _sprite.texture == null or grid == null: return
     var sz: Vector2i = footprint
-    var target_w := float(grid.cell_size) * float(sz.x)
-    var target_h := float(grid.cell_size) * float(sz.y)
-    var tw := float(_sprite.texture.get_width())
-    var th := float(_sprite.texture.get_height())
-    var s := min(target_w / tw, target_h / th) * 0.9
+    var target_w: float = float(grid.cell_size) * float(sz.x)
+    var target_h: float = float(grid.cell_size) * float(sz.y)
+    var tw: float = float(_sprite.texture.get_width())
+    var th: float = float(_sprite.texture.get_height())
+    var s: float = min(target_w / tw, target_h / th) * 0.9
     _sprite.scale = Vector2(s, s)
