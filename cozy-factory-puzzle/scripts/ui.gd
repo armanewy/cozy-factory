@@ -66,6 +66,22 @@ func _refresh_info() -> void:
     if game_state == null: return
     var info: String = "Budget: %d/%d  Power: %d/%d  Target: %s  Produced: %s" % [game_state.spent, game_state.budget, game_state.power_used, game_state.power_limit, str(game_state.target), str(game_state.produced)]
     $HUD/TopBar/Info.text = info
+    # Bars
+    var b := $HUD/Bars/BudgetBar
+    b.max_value = max(1, game_state.budget)
+    b.value = clamp(game_state.spent, 0, b.max_value)
+    b.modulate = _bar_color(b.value / b.max_value)
+    var p := $HUD/Bars/PowerBar
+    p.max_value = max(1, game_state.power_limit)
+    p.value = clamp(game_state.power_used, 0, p.max_value)
+    p.modulate = _bar_color(p.value / p.max_value)
+
+func _bar_color(ratio: float) -> Color:
+    if ratio >= 1.0:
+        return Color(0.9,0.2,0.2)
+    if ratio >= 0.85:
+        return Color(0.95,0.7,0.2)
+    return Color(0.3,0.9,0.4)
 
 func _find_level() -> Node:
     for n in get_tree().get_nodes_in_group("root"):

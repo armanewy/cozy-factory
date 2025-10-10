@@ -25,6 +25,10 @@ func _ensure_level_loaded(level_path: String) -> void:
 	game_state = level.get_node("GameState")
 	if grid.has_method("set_io_bus"):
 		grid.call("set_io_bus", io_bus)
+	# Inform UI of the new GameState
+	var ui := get_parent().get_node_or_null("UI")
+	if ui and ui.has_method("set_game_state"):
+		ui.call("set_game_state", game_state)
 	_load_level(level_path)
 
 func load_level_path(level_path: String) -> void:
