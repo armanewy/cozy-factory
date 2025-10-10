@@ -13,6 +13,8 @@ func set_refs(grid_in: Node, io_in: Node) -> void:
     add_to_group("tickables")
     queue_redraw()
     _ensure_sprite()
+    if grid and grid.has_signal("cell_size_changed"):
+        grid.cell_size_changed.connect(_on_grid_cell_size_changed)
 
 func tick(dt_ms: int) -> void:
     if io_bus == null or grid == null:
@@ -47,11 +49,24 @@ func _ensure_sprite() -> void:
         _sprite = Sprite2D.new()
         _sprite.texture = load(path)
         _sprite.centered = true
-        _sprite.scale = Vector2(0.07, 0.07)
+        _sprite.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
         add_child(_sprite)
         _update_sprite_rotation()
+        _fit_sprite()
 
 func _update_sprite_rotation() -> void:
     if _sprite == null: return
     var ang := atan2(direction.y, direction.x)
     _sprite.rotation = ang
+
+func _fit_sprite() -> void:
+    if _sprite == null or _sprite.texture == null or grid == null: return
+    var target_w := float(grid.cell_size)
+    var target_h := float(grid.cell_size)
+    var tw := float(_sprite.texture.get_width())
+    var th := float(_sprite.texture.get_height())
+    var s := min(target_w / tw, target_h / th) * 0.9
+    _sprite.scale = Vector2(s, s)
+
+func _on_grid_cell_size_changed(_cs: int) -> void:
+    _fit_sprite()

@@ -6,6 +6,8 @@ var rows := 8
 var occupied := {} # key -> Node2D
 var io_bus: Node = null
 
+signal cell_size_changed(new_size: int)
+
 func configure(cols_in: int, rows_in: int) -> void:
     cols = cols_in
     rows = rows_in
@@ -57,7 +59,9 @@ func fit_to_viewport_size(vp_size: Vector2, margin: int = 24) -> void:
     var avail_h: float = max(1.0, vp_size.y - float(margin) * 2.0)
     var px := int(floor(min(avail_w / float(cols), avail_h / float(rows))))
     px = max(px, 16)
-    cell_size = px
+    if cell_size != px:
+        cell_size = px
+        cell_size_changed.emit(cell_size)
     var grid_w := float(cols * cell_size)
     var grid_h := float(rows * cell_size)
     position = Vector2( floor((vp_size.x - grid_w) * 0.5), floor((vp_size.y - grid_h) * 0.5) )

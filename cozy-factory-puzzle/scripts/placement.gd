@@ -99,8 +99,8 @@ func _create_ghost() -> void:
 	ghost = Node2D.new()
 	ghost.name = "Ghost"
 	ghost_sprite = Sprite2D.new()
-	ghost_sprite.centered = true
-	ghost_sprite.scale = Vector2(0.07, 0.07)
+    ghost_sprite.centered = true
+    ghost_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	ghost.add_child(ghost_sprite)
 	grid.add_child(ghost)
 
@@ -121,7 +121,7 @@ func _update_ghost() -> void:
 	var place_dir: Vector2i = dir
 	if def.get("type") == "machine" and w != h and (dir.y != 0):
 		var tmp: int = w; w = h; h = tmp
-	# texture
+    # texture
 	var tex_path := ""
 	match current:
 		"mill": tex_path = "res://assets/cards/mill.png"
@@ -134,6 +134,13 @@ func _update_ghost() -> void:
 		ghost_sprite.texture = load(tex_path)
 	else:
 		ghost_sprite.texture = null
-	ghost_sprite.rotation = atan2(place_dir.y, place_dir.x)
+    ghost_sprite.rotation = atan2(place_dir.y, place_dir.x)
+    # scale to cell size
+    if ghost_sprite.texture:
+        var tw := float(ghost_sprite.texture.get_width())
+        var th := float(ghost_sprite.texture.get_height())
+        var target := float(grid.cell_size) * float(max(w, h))
+        var s := min(target/tw, target/th) * 0.9
+        ghost_sprite.scale = Vector2(s, s)
 	var ok: bool = game_state.can_place(def) and grid.free_for(cell, w, h)
 	ghost_sprite.modulate = Color(0.3,1,0.3,0.8) if ok else Color(1,0.3,0.3,0.8)

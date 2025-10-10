@@ -18,6 +18,8 @@ var _sprite: Sprite2D = null
 func set_refs(grid_in: Node, io_in: Node) -> void:
 	grid = grid_in
 	io_bus = io_in
+	if grid and grid.has_signal("cell_size_changed"):
+		grid.cell_size_changed.connect(_on_grid_cell_size_changed)
 
 
 func tick(dt_ms: int) -> void:
@@ -56,19 +58,23 @@ func _draw() -> void:
 	var size := Vector2(48, 48)
 	draw_rect(Rect2(-size*0.5, size), Color(0.85,0.9,1.0))
 	draw_rect(Rect2(-size*0.5, size), Color(0.2,0.2,0.2), false, 2.0)
+
+func _on_grid_cell_size_changed(_cs: int) -> void:
+	_fit_sprite()
 func _ready() -> void:
 	_add_sprite()
 
 func _add_sprite() -> void:
-	if _sprite != null: return
-	var tex := _texture_for_id()
-	if tex == null: return
-	_sprite = Sprite2D.new()
-	_sprite.name = "Sprite"
-	_sprite.texture = tex
-	_sprite.centered = true
-	_sprite.scale = Vector2(0.07, 0.07)
-	add_child(_sprite)
+    if _sprite != null: return
+    var tex := _texture_for_id()
+    if tex == null: return
+    _sprite = Sprite2D.new()
+    _sprite.name = "Sprite"
+    _sprite.texture = tex
+    _sprite.centered = true
+    _sprite.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+    add_child(_sprite)
+    _fit_sprite()
 
 func _texture_for_id() -> Texture2D:
 	var path := ""
@@ -78,6 +84,16 @@ func _texture_for_id() -> Texture2D:
 		"oven": path = "res://assets/cards/oven.png"
 		"seller": path = "res://assets/cards/market.png"
 		_: path = ""
-	if path != "" and ResourceLoader.exists(path):
-		return load(path)
-	return null
+    if path != "" and ResourceLoader.exists(path):
+        return load(path)
+    return null
+
+func _fit_sprite() -> void:
+    if _sprite == null or _sprite.texture == null or grid == null: return
+    var sz: Vector2i = footprint
+    var target_w := float(grid.cell_size) * float(sz.x)
+    var target_h := float(grid.cell_size) * float(sz.y)
+    var tw := float(_sprite.texture.get_width())
+    var th := float(_sprite.texture.get_height())
+    var s := min(target_w / tw, target_h / th) * 0.9
+    _sprite.scale = Vector2(s, s)
