@@ -27,17 +27,17 @@ func _ensure_level_loaded(level_path: String) -> void:
 	if grid.has_method("set_io_bus"):
 		grid.call("set_io_bus", io_bus)
 	# Fit grid to current viewport
-    if grid.has_method("fit_to_viewport_size"):
-        var vp_size: Vector2 = get_viewport().get_visible_rect().size
-        grid.call("fit_to_viewport_size", vp_size)
+	if grid.has_method("fit_to_viewport_size"):
+		var vp_size: Vector2 = get_viewport().get_visible_rect().size
+		grid.call("fit_to_viewport_size", vp_size)
 	# Connect viewport resize once
 	if not _vp_connected:
 		_vp_connected = true
-        get_viewport().size_changed.connect(func():
-            if grid and grid.has_method("fit_to_viewport_size"):
-                var sz: Vector2 = get_viewport().get_visible_rect().size
-                grid.call("fit_to_viewport_size", sz)
-        )
+		get_viewport().size_changed.connect(func():
+			if grid and grid.has_method("fit_to_viewport_size"):
+				var sz: Vector2 = get_viewport().get_visible_rect().size
+				grid.call("fit_to_viewport_size", sz)
+		)
 	# Inform UI of the new GameState
 	var ui := get_parent().get_node_or_null("UI")
 	if ui and ui.has_method("set_game_state"):
