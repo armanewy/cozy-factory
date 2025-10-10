@@ -94,7 +94,10 @@ func _spawn_demo_chain() -> void:
 func _place_machine(script_path: String, cell: Vector2i) -> void:
 	var s: Node2D = load("res://scenes/Building.tscn").instantiate() as Node2D
 	s.set_script(load(script_path))
-	add_child(s)
+	if _current_level:
+		_current_level.add_child(s)
+	else:
+		add_child(s)
 	s.position = grid.to_world(cell)
 	if s.has_method("set_refs"):
 		s.call("set_refs", grid, io_bus)
@@ -114,7 +117,10 @@ func _place_machine(script_path: String, cell: Vector2i) -> void:
 
 func _place_conveyor(cell: Vector2i, dir: Vector2i) -> void:
 	var c: Node2D = load("res://scenes/Conveyor.tscn").instantiate() as Node2D
-	add_child(c)
+	if _current_level:
+		_current_level.add_child(c)
+	else:
+		add_child(c)
 	c.position = grid.to_world(cell)
 	c.set("direction", dir)
 	if c.has_method("set_refs"):
