@@ -61,6 +61,7 @@ func fit_to_viewport_size(vp_size: Vector2, margin: int = 24) -> void:
     var grid_w := float(cols * cell_size)
     var grid_h := float(rows * cell_size)
     position = Vector2( floor((vp_size.x - grid_w) * 0.5), floor((vp_size.y - grid_h) * 0.5) )
+    _reposition_all()
     queue_redraw()
 
 func to_cell(world_pos: Vector2) -> Vector2i:
@@ -90,7 +91,7 @@ func place(node: Node2D, cell: Vector2i, w: int, h: int) -> bool:
         return false
     for c in rect_footprint(cell, w, h):
         occupied[_k(c)] = node
-    node.position = Vector2((cell.x + 0.5) * cell_size, (cell.y + 0.5) * cell_size)
+    node.position = to_world(cell)
     node.add_to_group("tickables")
     return true
 
@@ -104,3 +105,19 @@ func get_at(cell: Vector2i) -> Node2D:
 
 func _k(c: Vector2i) -> String:
     return str(c.x, ",", c.y)
+
+func _reposition_all() -> void:
+    # Recompute world positions for all placed nodes when grid moves or scales
+    var seen: = {}
+    for k in occupied.keys():
+        var node: Node2D = occupied[k]
+        if node == null or not is_instance_valid(node):
+            continue
+        if seen.has(node):
+            continue
+        seen[node] = true
+        var parts := str(k).split(",")
+        if parts.size() != 2:
+            continue
+        var cell := Vector2i(int(parts[0]), int(parts[1]))
+        node.position = to_world(cell)
