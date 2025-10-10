@@ -49,6 +49,20 @@ func _draw() -> void:
                 var pos := cell_origin + Vector2(cs*0.5, cs*0.5) + dirf * (prog-0.5) * cs * 0.8
                 draw_circle(pos, 6.0, Color(0.2,0.2,0.2,1.0))
 
+# Fit grid to viewport: compute cell_size that fills available area and center it
+func fit_to_viewport_size(vp_size: Vector2, margin: int = 24) -> void:
+    if cols <= 0 or rows <= 0:
+        return
+    var avail_w := max(1.0, vp_size.x - float(margin) * 2.0)
+    var avail_h := max(1.0, vp_size.y - float(margin) * 2.0)
+    var px := int(floor(min(avail_w / float(cols), avail_h / float(rows))))
+    px = max(px, 16)
+    cell_size = px
+    var grid_w := float(cols * cell_size)
+    var grid_h := float(rows * cell_size)
+    position = Vector2( floor((vp_size.x - grid_w) * 0.5), floor((vp_size.y - grid_h) * 0.5) )
+    queue_redraw()
+
 func to_cell(world_pos: Vector2) -> Vector2i:
     var local := to_local(world_pos)
     return Vector2i(floor(local.x / cell_size), floor(local.y / cell_size))

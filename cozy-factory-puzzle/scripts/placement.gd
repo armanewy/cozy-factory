@@ -79,16 +79,16 @@ func _try_place(cell: Vector2i) -> void:
 		node = load("res://scenes/Conveyor.tscn").instantiate() as Node2D
 		node.set("direction", place_dir)
 		node.call("set_refs", grid, io_bus)
-    else:
-        node = load("res://scenes/Building.tscn").instantiate() as Node2D
-        node.set_script(load(def.get("script")))
-        node.set("facing", place_dir)
-        node.set("id", current)
-        node.call("set_refs", grid, io_bus)
-        if node.has_method("set_game_state"):
-            node.call("set_game_state", game_state)
-        if node.has_method("_add_sprite"):
-            node.call("_add_sprite")
+	else:
+		node = load("res://scenes/Building.tscn").instantiate() as Node2D
+		node.set_script(load(def.get("script")))
+		node.set("facing", place_dir)
+		node.set("id", current)
+		node.call("set_refs", grid, io_bus)
+		if node.has_method("set_game_state"):
+			node.call("set_game_state", game_state)
+		if node.has_method("_add_sprite"):
+			node.call("_add_sprite")
 	node.set("build_id", current)
 	if grid.place(node, cell, w, h):
 		get_parent().add_child(node)

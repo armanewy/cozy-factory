@@ -5,7 +5,7 @@ extends "res://scripts/machine.gd"
 var game_state: Node = null
 
 func set_game_state(gs: Node) -> void:
-    game_state = gs
+	game_state = gs
 
 func tick(_dt_ms: int) -> void:
 	# Try to consume as many accepted items as available this tick (bounded)
@@ -20,12 +20,12 @@ func tick(_dt_ms: int) -> void:
 			consumed += 1
 		else:
 			break
-    if consumed > 0 and game_state and game_state.has_method("on_item_sold"):
-        game_state.call("on_item_sold", accepts[0], consumed)
+	if consumed > 0 and game_state and game_state.has_method("on_item_sold"):
+		game_state.call("on_item_sold", accepts[0], consumed)
 
 func _ready() -> void:
-    id = "seller"
-    _add_sprite()
+	id = "seller"
+	_add_sprite()
 
 func _draw() -> void:
 	var size := Vector2(42, 42)

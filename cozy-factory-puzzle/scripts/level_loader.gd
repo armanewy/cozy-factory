@@ -8,6 +8,7 @@ var game_state: Node = null
 var _grid_cols: int = 12
 var _grid_rows: int = 8
 var _current_level: Node = null
+var _vp_connected: bool = false
 
 func _ready() -> void:
 	# Load first level by default
@@ -25,6 +26,16 @@ func _ensure_level_loaded(level_path: String) -> void:
 	game_state = level.get_node("GameState")
 	if grid.has_method("set_io_bus"):
 		grid.call("set_io_bus", io_bus)
+	# Fit grid to current viewport
+	if grid.has_method("fit_to_viewport_size"):
+		grid.call("fit_to_viewport_size", get_viewport_rect().size)
+	# Connect viewport resize once
+	if not _vp_connected:
+		_vp_connected = true
+		get_viewport().size_changed.connect(func():
+			if grid and grid.has_method("fit_to_viewport_size"):
+				grid.call("fit_to_viewport_size", get_viewport_rect().size)
+		)
 	# Inform UI of the new GameState
 	var ui := get_parent().get_node_or_null("UI")
 	if ui and ui.has_method("set_game_state"):
