@@ -7,4 +7,4 @@ func _ready() -> void:
     inputs = ["flour"]
     outputs = ["dough"]
     footprint = Vector2i(1,1)
-
+    _add_sprite()

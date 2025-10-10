@@ -8,4 +8,4 @@ func _ready() -> void:
     inputs = []
     outputs = ["flour"]
     footprint = Vector2i(1,1)
-
+    _add_sprite()

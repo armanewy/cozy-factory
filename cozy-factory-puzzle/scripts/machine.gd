@@ -76,6 +76,7 @@ func _texture_for_id() -> Texture2D:
 		"mill": path = "res://assets/cards/mill.png"
 		"mixer": path = "res://assets/cards/mixer.png"
 		"oven": path = "res://assets/cards/oven.png"
+		"seller": path = "res://assets/cards/market.png"
 		_: path = ""
 	if path != "" and ResourceLoader.exists(path):
 		return load(path)

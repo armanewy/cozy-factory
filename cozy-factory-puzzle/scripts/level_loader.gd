@@ -85,6 +85,17 @@ func _place_machine(script_path: String, cell: Vector2i) -> void:
 	s.position = grid.to_world(cell)
 	if s.has_method("set_refs"):
 		s.call("set_refs", grid, io_bus)
+	# Provide id early so base can pick texture even if derived doesn't call base
+	if script_path.find("mill") != -1:
+		s.set("id", "mill")
+	elif script_path.find("mixer") != -1:
+		s.set("id", "mixer")
+	elif script_path.find("oven") != -1:
+		s.set("id", "oven")
+	elif script_path.find("seller") != -1:
+		s.set("id", "seller")
+	if s.has_method("_add_sprite"):
+		s.call("_add_sprite")
 	var fp: Vector2i = s.get("footprint")
 	grid.place(s, cell, fp.x, fp.y)
 
