@@ -53,8 +53,8 @@ func _draw() -> void:
 func fit_to_viewport_size(vp_size: Vector2, margin: int = 24) -> void:
     if cols <= 0 or rows <= 0:
         return
-    var avail_w := max(1.0, vp_size.x - float(margin) * 2.0)
-    var avail_h := max(1.0, vp_size.y - float(margin) * 2.0)
+    var avail_w: float = max(1.0, vp_size.x - float(margin) * 2.0)
+    var avail_h: float = max(1.0, vp_size.y - float(margin) * 2.0)
     var px := int(floor(min(avail_w / float(cols), avail_h / float(rows))))
     px = max(px, 16)
     cell_size = px
