@@ -49,6 +49,8 @@ func set_game_state(gs: Node) -> void:
     game_state = gs
     if gs.has_signal("level_passed"):
         gs.level_passed.connect(_on_level_passed)
+    if gs.has_signal("stats_changed"):
+        gs.stats_changed.connect(_refresh_info)
     _refresh_info()
 
 func _on_level_passed() -> void:
@@ -70,4 +72,3 @@ func _find_level() -> Node:
         pass
     # fallback: look under Main
     return get_parent().get_node_or_null("Level")
-
